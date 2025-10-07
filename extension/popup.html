@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Scroll Resistance</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main>
+      <section class="mode">
+        <button id="whitelist-mode" data-mode="whitelist">Whitelist Mode</button>
+        <button id="blacklist-mode" data-mode="blacklist">Blacklist Mode</button>
+      </section>
+      <section class="status">
+        <p id="site-message">Loading...</p>
+        <button id="toggle-site" disabled>Add this site</button>
+      </section>
+      <section class="actions">
+        <button id="open-settings">Settings</button>
+      </section>
+    </main>
+    <script src="popup.js" defer></script>
+  </body>
+</html>

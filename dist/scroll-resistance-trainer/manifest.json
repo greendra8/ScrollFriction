@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Scroll Resistance Trainer",
+  "version": "0.1.0",
+  "description": "Increase scroll resistance the longer you stay on distracting sites.",
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Scroll Resistance Trainer",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ]
+}

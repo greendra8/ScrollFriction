@@ -1,0 +1,2223 @@
+diff --git a/build.mjs b/build.mjs
+new file mode 100755
+index 0000000000000000000000000000000000000000..d0cdd0614a970805cd815d0e9a8a6525d2d54771
+--- /dev/null
++++ b/build.mjs
+@@ -0,0 +1,67 @@
++#!/usr/bin/env node
++
++import { promises as fs } from 'fs';
++import { spawn } from 'child_process';
++import path from 'path';
++import url from 'url';
++
++const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
++const repoRoot = __dirname;
++const extensionDir = path.join(repoRoot, 'extension');
++const distDir = path.join(repoRoot, 'dist');
++const buildDir = path.join(distDir, 'scroll-resistance-trainer');
++const zipPath = path.join(distDir, 'scroll-resistance-trainer.zip');
++
++async function ensureCleanDist() {
++  await fs.rm(distDir, { recursive: true, force: true });
++  await fs.mkdir(buildDir, { recursive: true });
++}
++
++async function copyDirectory(src, dest) {
++  await fs.mkdir(dest, { recursive: true });
++  const entries = await fs.readdir(src, { withFileTypes: true });
++  await Promise.all(
++    entries.map(async (entry) => {
++      const srcPath = path.join(src, entry.name);
++      const destPath = path.join(dest, entry.name);
++      if (entry.isDirectory()) {
++        await copyDirectory(srcPath, destPath);
++      } else if (entry.isFile()) {
++        await fs.copyFile(srcPath, destPath);
++      }
++    })
++  );
++}
++
++async function zipBuildDirectory() {
++  return new Promise((resolve, reject) => {
++    const zipArgs = ['-r', '-q', zipPath, '.'];
++    const child = spawn('zip', zipArgs, { cwd: buildDir, stdio: 'inherit' });
++
++    child.on('error', (error) => {
++      reject(error);
++    });
++
++    child.on('close', (code) => {
++      if (code === 0) {
++        resolve();
++      } else {
++        reject(new Error(`zip command exited with code ${code}`));
++      }
++    });
++  });
++}
++
++async function main() {
++  try {
++    await ensureCleanDist();
++    await copyDirectory(extensionDir, buildDir);
++    await zipBuildDirectory();
++    console.log(`Extension packaged at ${zipPath}`);
++  } catch (error) {
++    console.error('Failed to build extension:', error);
++    process.exitCode = 1;
++  }
++}
++
++await main();
+diff --git a/dist/scroll-resistance-trainer.zip b/dist/scroll-resistance-trainer.zip
+new file mode 100644
+index 0000000000000000000000000000000000000000..3a359ca3258c77ec3ced216fb26b45112328f9be
+GIT binary patch
+literal 8960
+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
+JF6Cd}{vXg~w_N}L
+
+literal 0
+HcmV?d00001
+
+diff --git a/dist/scroll-resistance-trainer/background.js b/dist/scroll-resistance-trainer/background.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..0c44ead838408a4c3fa4f269666d4aef36c1132c
+--- /dev/null
++++ b/dist/scroll-resistance-trainer/background.js
+@@ -0,0 +1,75 @@
++const DEFAULT_SETTINGS = {
++  mode: 'whitelist',
++  whitelist: [],
++  blacklist: [],
++  resistance: {
++    baseMultiplier: 1.5,
++    incrementPerScroll: 0.2,
++    maxMultiplier: 20,
++    recoveryPerSecond: 1,
++    distanceWeight: 120
++  }
++};
++
++function ensureDefaults() {
++  chrome.storage.sync.get(null, (items) => {
++    if (chrome.runtime.lastError) {
++      console.error('Failed to read storage', chrome.runtime.lastError);
++      return;
++    }
++
++    const updates = {};
++
++    if (items.mode !== 'whitelist' && items.mode !== 'blacklist') {
++      updates.mode = DEFAULT_SETTINGS.mode;
++    }
++
++    if (!Array.isArray(items.whitelist)) {
++      updates.whitelist = DEFAULT_SETTINGS.whitelist;
++    }
++
++    if (!Array.isArray(items.blacklist)) {
++      updates.blacklist = DEFAULT_SETTINGS.blacklist;
++    }
++
++    const storedResistance = items.resistance || {};
++    const mergedResistance = {
++      baseMultiplier:
++        Number.isFinite(storedResistance.baseMultiplier) && storedResistance.baseMultiplier > 0
++          ? storedResistance.baseMultiplier
++          : DEFAULT_SETTINGS.resistance.baseMultiplier,
++      incrementPerScroll:
++        Number.isFinite(storedResistance.incrementPerScroll) && storedResistance.incrementPerScroll >= 0
++          ? storedResistance.incrementPerScroll
++          : DEFAULT_SETTINGS.resistance.incrementPerScroll,
++      maxMultiplier:
++        Number.isFinite(storedResistance.maxMultiplier) && storedResistance.maxMultiplier >= 1
++          ? storedResistance.maxMultiplier
++          : DEFAULT_SETTINGS.resistance.maxMultiplier,
++      recoveryPerSecond:
++        Number.isFinite(storedResistance.recoveryPerSecond) && storedResistance.recoveryPerSecond >= 0
++          ? storedResistance.recoveryPerSecond
++          : DEFAULT_SETTINGS.resistance.recoveryPerSecond,
++      distanceWeight:
++        Number.isFinite(storedResistance.distanceWeight) && storedResistance.distanceWeight > 0
++          ? storedResistance.distanceWeight
++          : DEFAULT_SETTINGS.resistance.distanceWeight
++    };
++
++    if (JSON.stringify(storedResistance) !== JSON.stringify(mergedResistance)) {
++      updates.resistance = mergedResistance;
++    }
++
++    if (Object.keys(updates).length > 0) {
++      chrome.storage.sync.set(updates);
++    }
++  });
++}
++
++chrome.runtime.onInstalled.addListener(() => {
++  ensureDefaults();
++});
++
++chrome.runtime.onStartup.addListener(() => {
++  ensureDefaults();
++});
+diff --git a/dist/scroll-resistance-trainer/content.js b/dist/scroll-resistance-trainer/content.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..d263b077831d32474a1b39fb6927dc3335149489
+--- /dev/null
++++ b/dist/scroll-resistance-trainer/content.js
+@@ -0,0 +1,183 @@
++const DEFAULT_SETTINGS = {
++  mode: 'whitelist',
++  whitelist: [],
++  blacklist: [],
++  resistance: {
++    baseMultiplier: 1.5,
++    incrementPerScroll: 0.2,
++    maxMultiplier: 20,
++    recoveryPerSecond: 1,
++    distanceWeight: 120
++  }
++};
++
++let settings = { ...DEFAULT_SETTINGS };
++let enabled = false;
++let multiplier = DEFAULT_SETTINGS.resistance.baseMultiplier;
++let scrollUnits = 0;
++let recoveryTimer = null;
++
++function cloneSettings(value) {
++  return JSON.parse(JSON.stringify(value));
++}
++
++function getHostname() {
++  return window.location.hostname.toLowerCase();
++}
++
++function isHostInList(host, list) {
++  return Array.isArray(list) && list.some((entry) => entry === host);
++}
++
++function determineEnabled() {
++  const host = getHostname();
++  if (settings.mode === 'whitelist') {
++    return !isHostInList(host, settings.whitelist);
++  }
++  return isHostInList(host, settings.blacklist);
++}
++
++function sanitizeResistanceConfig(raw = {}) {
++  const baseMultiplier = Number.isFinite(raw.baseMultiplier) && raw.baseMultiplier > 0
++    ? raw.baseMultiplier
++    : DEFAULT_SETTINGS.resistance.baseMultiplier;
++  const incrementPerScroll = Number.isFinite(raw.incrementPerScroll) && raw.incrementPerScroll >= 0
++    ? raw.incrementPerScroll
++    : DEFAULT_SETTINGS.resistance.incrementPerScroll;
++  const maxMultiplier = Number.isFinite(raw.maxMultiplier) && raw.maxMultiplier >= 1
++    ? raw.maxMultiplier
++    : DEFAULT_SETTINGS.resistance.maxMultiplier;
++  const recoveryPerSecond = Number.isFinite(raw.recoveryPerSecond) && raw.recoveryPerSecond >= 0
++    ? raw.recoveryPerSecond
++    : DEFAULT_SETTINGS.resistance.recoveryPerSecond;
++  const distanceWeight = Number.isFinite(raw.distanceWeight) && raw.distanceWeight > 0
++    ? raw.distanceWeight
++    : DEFAULT_SETTINGS.resistance.distanceWeight;
++
++  return { baseMultiplier, incrementPerScroll, maxMultiplier, recoveryPerSecond, distanceWeight };
++}
++
++function updateMultiplier() {
++  const { baseMultiplier, incrementPerScroll, maxMultiplier } = settings.resistance;
++  multiplier = Math.min(maxMultiplier, baseMultiplier + scrollUnits * incrementPerScroll);
++}
++
++function scheduleRecovery() {
++  if (recoveryTimer) {
++    return;
++  }
++
++  const intervalMs = 1000;
++  recoveryTimer = setInterval(() => {
++    if (!enabled) {
++      scrollUnits = 0;
++      updateMultiplier();
++      clearInterval(recoveryTimer);
++      recoveryTimer = null;
++      return;
++    }
++
++    if (scrollUnits <= 0) {
++      scrollUnits = 0;
++      updateMultiplier();
++      return;
++    }
++
++    const { recoveryPerSecond } = settings.resistance;
++    scrollUnits = Math.max(0, scrollUnits - recoveryPerSecond);
++    updateMultiplier();
++  }, intervalMs);
++}
++
++function stopRecovery() {
++  if (recoveryTimer) {
++    clearInterval(recoveryTimer);
++    recoveryTimer = null;
++  }
++}
++
++function applySettings(newSettings) {
++  settings = {
++    mode: newSettings.mode === 'blacklist' ? 'blacklist' : DEFAULT_SETTINGS.mode,
++    whitelist: Array.isArray(newSettings.whitelist)
++      ? cloneSettings(newSettings.whitelist)
++      : cloneSettings(DEFAULT_SETTINGS.whitelist),
++    blacklist: Array.isArray(newSettings.blacklist)
++      ? cloneSettings(newSettings.blacklist)
++      : cloneSettings(DEFAULT_SETTINGS.blacklist),
++    resistance: sanitizeResistanceConfig(newSettings.resistance)
++  };
++
++  enabled = determineEnabled();
++  scrollUnits = 0;
++  updateMultiplier();
++
++  if (enabled) {
++    scheduleRecovery();
++  } else {
++    stopRecovery();
++  }
++}
++
++function handleWheel(event) {
++  if (!enabled) {
++    return;
++  }
++
++  if (event.defaultPrevented || event.ctrlKey || event.metaKey) {
++    return;
++  }
++
++  const deltaX = event.deltaX / multiplier;
++  const deltaY = event.deltaY / multiplier;
++
++  event.preventDefault();
++  window.scrollBy({ left: deltaX, top: deltaY, behavior: 'auto' });
++
++  const distance = Math.max(Math.abs(event.deltaX), Math.abs(event.deltaY));
++  const { distanceWeight } = settings.resistance;
++  const weight = distanceWeight > 0 ? distanceWeight : 1;
++  const gain = distance > 0 ? Math.max(1, distance / weight) : 1;
++  scrollUnits += gain;
++  updateMultiplier();
++  scheduleRecovery();
++}
++
++function init() {
++  chrome.storage.sync.get(null, (items) => {
++    if (chrome.runtime.lastError) {
++      console.error('Scroll Resistance: failed to read settings', chrome.runtime.lastError);
++      return;
++    }
++    applySettings(items);
++  });
++
++  chrome.storage.onChanged.addListener((changes, areaName) => {
++    if (areaName !== 'sync') {
++      return;
++    }
++
++    const updated = { ...settings };
++    if (Object.prototype.hasOwnProperty.call(changes, 'mode')) {
++      updated.mode = changes.mode.newValue;
++    }
++    if (Object.prototype.hasOwnProperty.call(changes, 'whitelist')) {
++      updated.whitelist = Array.isArray(changes.whitelist.newValue)
++        ? cloneSettings(changes.whitelist.newValue)
++        : cloneSettings(DEFAULT_SETTINGS.whitelist);
++    }
++    if (Object.prototype.hasOwnProperty.call(changes, 'blacklist')) {
++      updated.blacklist = Array.isArray(changes.blacklist.newValue)
++        ? cloneSettings(changes.blacklist.newValue)
++        : cloneSettings(DEFAULT_SETTINGS.blacklist);
++    }
++    if (Object.prototype.hasOwnProperty.call(changes, 'resistance')) {
++      updated.resistance = sanitizeResistanceConfig(changes.resistance.newValue);
++    }
++    applySettings(updated);
++  });
++
++  window.addEventListener('wheel', handleWheel, { passive: false });
++}
++
++init();
+diff --git a/dist/scroll-resistance-trainer/manifest.json b/dist/scroll-resistance-trainer/manifest.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..e2e351fc7adc5afc2b4b9916f7a90f87bebd189f
+--- /dev/null
++++ b/dist/scroll-resistance-trainer/manifest.json
+@@ -0,0 +1,28 @@
++{
++  "manifest_version": 3,
++  "name": "Scroll Resistance Trainer",
++  "version": "0.1.0",
++  "description": "Increase scroll resistance the longer you stay on distracting sites.",
++  "permissions": [
++    "storage",
++    "tabs"
++  ],
++  "host_permissions": [
++    "<all_urls>"
++  ],
++  "background": {
++    "service_worker": "background.js"
++  },
++  "action": {
++    "default_title": "Scroll Resistance Trainer",
++    "default_popup": "popup.html"
++  },
++  "options_page": "options.html",
++  "content_scripts": [
++    {
++      "matches": ["<all_urls>"],
++      "js": ["content.js"],
++      "run_at": "document_start"
++    }
++  ]
++}
+diff --git a/dist/scroll-resistance-trainer/options.css b/dist/scroll-resistance-trainer/options.css
+new file mode 100644
+index 0000000000000000000000000000000000000000..73ec360f43b5384d955ae0f1ac14025c55e7d9d1
+--- /dev/null
++++ b/dist/scroll-resistance-trainer/options.css
+@@ -0,0 +1,127 @@
++body {
++  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
++  background: #0d1018;
++  color: #f5f7ff;
++  margin: 0;
++  padding: 2rem;
++}
++
++main {
++  max-width: 640px;
++  margin: 0 auto;
++  display: flex;
++  flex-direction: column;
++  gap: 2rem;
++}
++
++h1 {
++  margin: 0;
++  font-size: 1.8rem;
++}
++
++h2 {
++  font-size: 1.2rem;
++  margin-bottom: 0.75rem;
++}
++
++section {
++  background: rgba(23, 30, 46, 0.9);
++  padding: 1.5rem;
++  border-radius: 12px;
++  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
++}
++
++label {
++  display: block;
++  margin-bottom: 0.5rem;
++  line-height: 1.4;
++}
++
++input[type='text'],
++input[type='number'] {
++  width: 100%;
++  margin-top: 0.35rem;
++  padding: 0.5rem;
++  border-radius: 6px;
++  border: 1px solid rgba(255, 255, 255, 0.1);
++  background: rgba(10, 14, 22, 0.8);
++  color: inherit;
++}
++
++form {
++  display: flex;
++  gap: 0.5rem;
++  margin-bottom: 1rem;
++}
++
++form button,
++button {
++  background: #2b8a3e;
++  color: #fff;
++  border: none;
++  border-radius: 6px;
++  padding: 0.6rem 1rem;
++  cursor: pointer;
++  transition: background 0.2s ease;
++}
++
++button.secondary {
++  background: #22304a;
++}
++
++button:hover {
++  background: #237233;
++}
++
++button.secondary:hover {
++  background: #1a2638;
++}
++
++.site-list {
++  list-style: none;
++  padding: 0;
++  margin: 0;
++  display: flex;
++  flex-direction: column;
++  gap: 0.5rem;
++}
++
++.site-list li {
++  display: flex;
++  justify-content: space-between;
++  align-items: center;
++  background: rgba(12, 16, 26, 0.8);
++  padding: 0.6rem 0.75rem;
++  border-radius: 6px;
++}
++
++.site-list li.empty {
++  justify-content: center;
++  color: rgba(245, 247, 255, 0.6);
++}
++
++.site-list button {
++  background: #b91c1c;
++}
++
++.site-list button:hover {
++  background: #991b1b;
++}
++
++.resistance-grid {
++  display: grid;
++  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
++  gap: 1rem;
++}
++
++.resistance-actions {
++  display: flex;
++  gap: 0.75rem;
++  margin-top: 1rem;
++}
++
++.status {
++  margin-top: 0.75rem;
++  min-height: 1.25rem;
++  color: #8fd19e;
++}
+diff --git a/dist/scroll-resistance-trainer/options.html b/dist/scroll-resistance-trainer/options.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..f49bbe582c459ac2429921a14eaf9ed7e75aa320
+--- /dev/null
++++ b/dist/scroll-resistance-trainer/options.html
+@@ -0,0 +1,74 @@
++<!DOCTYPE html>
++<html lang="en">
++  <head>
++    <meta charset="UTF-8" />
++    <title>Scroll Resistance Settings</title>
++    <link rel="stylesheet" href="options.css" />
++  </head>
++  <body>
++    <main>
++      <h1>Scroll Resistance</h1>
++      <section>
++        <h2>Mode</h2>
++        <label>
++          <input type="radio" name="mode" value="whitelist" />
++          Whitelist mode (resistance everywhere except allowed sites)
++        </label>
++        <label>
++          <input type="radio" name="mode" value="blacklist" />
++          Blacklist mode (resistance only on selected sites)
++        </label>
++      </section>
++
++      <section>
++        <h2>Whitelist</h2>
++        <form id="whitelist-form">
++          <input type="text" id="whitelist-input" placeholder="example.com" />
++          <button type="submit">Add</button>
++        </form>
++        <ul id="whitelist-list" class="site-list"></ul>
++      </section>
++
++      <section>
++        <h2>Blacklist</h2>
++        <form id="blacklist-form">
++          <input type="text" id="blacklist-input" placeholder="example.com" />
++          <button type="submit">Add</button>
++        </form>
++        <ul id="blacklist-list" class="site-list"></ul>
++      </section>
++
++      <section>
++        <h2>Resistance settings</h2>
++        <div class="resistance-grid">
++          <label>
++            Base multiplier
++            <input type="number" id="base-multiplier" step="0.1" min="1" />
++          </label>
++          <label>
++            Increment per scroll
++            <input type="number" id="increment-per-scroll" step="0.05" min="0" />
++          </label>
++          <label>
++            Maximum multiplier
++            <input type="number" id="max-multiplier" step="0.5" min="1" />
++          </label>
++          <label>
++            Recovery per second
++            <input type="number" id="recovery-per-second" step="0.1" min="0" />
++          </label>
++          <label>
++            Distance weight (pixels per resistance unit)
++            <input type="number" id="distance-weight" step="10" min="1" />
++          </label>
++        </div>
++        <div class="resistance-actions">
++          <button id="save-resistance">Save resistance</button>
++          <button id="reset-resistance" class="secondary">Reset defaults</button>
++        </div>
++        <p id="resistance-status" class="status"></p>
++      </section>
++    </main>
++    <script src="options.js" defer></script>
++  </body>
++</html>
+diff --git a/dist/scroll-resistance-trainer/options.js b/dist/scroll-resistance-trainer/options.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..02779a9edd50f2ed5e771e1e16d4b140177f4171
+--- /dev/null
++++ b/dist/scroll-resistance-trainer/options.js
+@@ -0,0 +1,217 @@
++const DEFAULT_SETTINGS = {
++  mode: 'whitelist',
++  whitelist: [],
++  blacklist: [],
++  resistance: {
++    baseMultiplier: 1.5,
++    incrementPerScroll: 0.2,
++    maxMultiplier: 20,
++    recoveryPerSecond: 1,
++    distanceWeight: 120
++  }
++};
++
++const modeInputs = document.querySelectorAll('input[name="mode"]');
++const whitelistForm = document.getElementById('whitelist-form');
++const whitelistInput = document.getElementById('whitelist-input');
++const whitelistList = document.getElementById('whitelist-list');
++const blacklistForm = document.getElementById('blacklist-form');
++const blacklistInput = document.getElementById('blacklist-input');
++const blacklistList = document.getElementById('blacklist-list');
++const baseMultiplierInput = document.getElementById('base-multiplier');
++const incrementPerScrollInput = document.getElementById('increment-per-scroll');
++const maxMultiplierInput = document.getElementById('max-multiplier');
++const recoveryPerSecondInput = document.getElementById('recovery-per-second');
++const distanceWeightInput = document.getElementById('distance-weight');
++const saveResistanceButton = document.getElementById('save-resistance');
++const resetResistanceButton = document.getElementById('reset-resistance');
++const resistanceStatus = document.getElementById('resistance-status');
++
++let currentSettings = cloneDefaults(DEFAULT_SETTINGS);
++
++function cloneDefaults(value) {
++  return JSON.parse(JSON.stringify(value));
++}
++
++function normalizeHost(value) {
++  if (!value) {
++    return null;
++  }
++
++  let host = value.trim().toLowerCase();
++  if (!host) {
++    return null;
++  }
++
++  if (!host.includes('://')) {
++    host = `https://${host}`;
++  }
++
++  try {
++    return new URL(host).hostname;
++  } catch (error) {
++    return null;
++  }
++}
++
++function renderMode() {
++  modeInputs.forEach((input) => {
++    input.checked = input.value === currentSettings.mode;
++  });
++}
++
++function renderList(listElement, sites, type) {
++  listElement.textContent = '';
++  if (!Array.isArray(sites) || sites.length === 0) {
++    const empty = document.createElement('li');
++    empty.className = 'empty';
++    empty.textContent = 'No sites yet.';
++    listElement.appendChild(empty);
++    return;
++  }
++
++  sites
++    .slice()
++    .sort((a, b) => a.localeCompare(b))
++    .forEach((host) => {
++      const li = document.createElement('li');
++      li.textContent = host;
++      const button = document.createElement('button');
++      button.type = 'button';
++      button.textContent = 'Remove';
++      button.addEventListener('click', () => removeHost(type, host));
++      li.appendChild(button);
++      listElement.appendChild(li);
++    });
++}
++
++function renderResistance() {
++  const { baseMultiplier, incrementPerScroll, maxMultiplier, recoveryPerSecond, distanceWeight } =
++    currentSettings.resistance;
++  baseMultiplierInput.value = baseMultiplier;
++  incrementPerScrollInput.value = incrementPerScroll;
++  maxMultiplierInput.value = maxMultiplier;
++  recoveryPerSecondInput.value = recoveryPerSecond;
++  distanceWeightInput.value = distanceWeight;
++}
++
++function saveSettings(partial) {
++  chrome.storage.sync.set(partial, () => {
++    if (chrome.runtime.lastError) {
++      console.error('Failed to save settings', chrome.runtime.lastError);
++    }
++  });
++}
++
++function removeHost(type, host) {
++  const list = currentSettings[type];
++  const index = list.indexOf(host);
++  if (index >= 0) {
++    list.splice(index, 1);
++    renderList(type === 'whitelist' ? whitelistList : blacklistList, list, type);
++    saveSettings({ [type]: list });
++  }
++}
++
++function handleListSubmit(event, type) {
++  event.preventDefault();
++  const input = type === 'whitelist' ? whitelistInput : blacklistInput;
++  const host = normalizeHost(input.value);
++  if (!host) {
++    input.value = '';
++    return;
++  }
++
++  const list = currentSettings[type];
++  if (!list.includes(host)) {
++    list.push(host);
++    renderList(type === 'whitelist' ? whitelistList : blacklistList, list, type);
++    saveSettings({ [type]: list });
++  }
++
++  input.value = '';
++}
++
++function handleModeChange(event) {
++  const { value } = event.target;
++  if (value === 'whitelist' || value === 'blacklist') {
++    currentSettings.mode = value;
++    saveSettings({ mode: value });
++  }
++}
++
++function handleSaveResistance() {
++  const base = Number.parseFloat(baseMultiplierInput.value);
++  const increment = Number.parseFloat(incrementPerScrollInput.value);
++  const max = Number.parseFloat(maxMultiplierInput.value);
++  const recovery = Number.parseFloat(recoveryPerSecondInput.value);
++  const distanceWeight = Number.parseFloat(distanceWeightInput.value);
++
++  const resistance = {
++    baseMultiplier: Number.isFinite(base) && base > 0 ? base : DEFAULT_SETTINGS.resistance.baseMultiplier,
++    incrementPerScroll:
++      Number.isFinite(increment) && increment >= 0 ? increment : DEFAULT_SETTINGS.resistance.incrementPerScroll,
++    maxMultiplier: Number.isFinite(max) && max >= 1 ? max : DEFAULT_SETTINGS.resistance.maxMultiplier,
++    recoveryPerSecond:
++      Number.isFinite(recovery) && recovery >= 0 ? recovery : DEFAULT_SETTINGS.resistance.recoveryPerSecond,
++    distanceWeight:
++      Number.isFinite(distanceWeight) && distanceWeight > 0
++        ? distanceWeight
++        : DEFAULT_SETTINGS.resistance.distanceWeight
++  };
++
++  currentSettings.resistance = resistance;
++  saveSettings({ resistance });
++  resistanceStatus.textContent = 'Resistance settings saved.';
++  setTimeout(() => {
++    resistanceStatus.textContent = '';
++  }, 2000);
++}
++
++function handleResetResistance() {
++  currentSettings.resistance = cloneDefaults(DEFAULT_SETTINGS.resistance);
++  renderResistance();
++  saveSettings({ resistance: currentSettings.resistance });
++  resistanceStatus.textContent = 'Defaults restored.';
++  setTimeout(() => {
++    resistanceStatus.textContent = '';
++  }, 2000);
++}
++
++function hydrate() {
++  chrome.storage.sync.get(null, (items) => {
++    if (chrome.runtime.lastError) {
++      console.error('Failed to load settings', chrome.runtime.lastError);
++      return;
++    }
++
++    currentSettings = {
++      mode: items.mode ?? DEFAULT_SETTINGS.mode,
++      whitelist: Array.isArray(items.whitelist) ? items.whitelist.slice() : cloneDefaults(DEFAULT_SETTINGS.whitelist),
++      blacklist: Array.isArray(items.blacklist) ? items.blacklist.slice() : cloneDefaults(DEFAULT_SETTINGS.blacklist),
++      resistance: {
++        baseMultiplier: items.resistance?.baseMultiplier ?? DEFAULT_SETTINGS.resistance.baseMultiplier,
++        incrementPerScroll: items.resistance?.incrementPerScroll ?? DEFAULT_SETTINGS.resistance.incrementPerScroll,
++        maxMultiplier: items.resistance?.maxMultiplier ?? DEFAULT_SETTINGS.resistance.maxMultiplier,
++        recoveryPerSecond: items.resistance?.recoveryPerSecond ?? DEFAULT_SETTINGS.resistance.recoveryPerSecond,
++        distanceWeight: items.resistance?.distanceWeight ?? DEFAULT_SETTINGS.resistance.distanceWeight
++      }
++    };
++
++    renderMode();
++    renderList(whitelistList, currentSettings.whitelist, 'whitelist');
++    renderList(blacklistList, currentSettings.blacklist, 'blacklist');
++    renderResistance();
++  });
++}
++
++function init() {
++  hydrate();
++  whitelistForm.addEventListener('submit', (event) => handleListSubmit(event, 'whitelist'));
++  blacklistForm.addEventListener('submit', (event) => handleListSubmit(event, 'blacklist'));
++  modeInputs.forEach((input) => input.addEventListener('change', handleModeChange));
++  saveResistanceButton.addEventListener('click', handleSaveResistance);
++  resetResistanceButton.addEventListener('click', handleResetResistance);
++}
++
++document.addEventListener('DOMContentLoaded', init);
+diff --git a/dist/scroll-resistance-trainer/popup.css b/dist/scroll-resistance-trainer/popup.css
+new file mode 100644
+index 0000000000000000000000000000000000000000..b2fce638ba622e4045fa11ae50c6a8e956ada915
+--- /dev/null
++++ b/dist/scroll-resistance-trainer/popup.css
+@@ -0,0 +1,73 @@
++body {
++  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
++  margin: 0;
++  padding: 0.75rem;
++  background: #10131a;
++  color: #f5f7ff;
++  min-width: 220px;
++}
++
++main {
++  display: flex;
++  flex-direction: column;
++  gap: 0.75rem;
++}
++
++button {
++  background: #2b8a3e;
++  color: #fff;
++  border: none;
++  border-radius: 6px;
++  padding: 0.5rem;
++  font-size: 0.95rem;
++  cursor: pointer;
++  transition: background 0.2s ease;
++}
++
++button:hover {
++  background: #237233;
++}
++
++button.secondary {
++  background: #22304a;
++}
++
++button.secondary:hover {
++  background: #1a2638;
++}
++
++.mode {
++  display: flex;
++  gap: 0.5rem;
++}
++
++.mode button {
++  flex: 1;
++}
++
++.mode button.active {
++  background: #0d6efd;
++}
++
++.status p {
++  margin: 0 0 0.5rem;
++  font-size: 0.9rem;
++}
++
++#toggle-site[disabled] {
++  opacity: 0.6;
++  cursor: default;
++}
++
++.actions {
++  display: flex;
++  justify-content: flex-end;
++}
++
++#open-settings {
++  background: #22304a;
++}
++
++#open-settings:hover {
++  background: #1a2638;
++}
+diff --git a/dist/scroll-resistance-trainer/popup.html b/dist/scroll-resistance-trainer/popup.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..104552a8bbe4a1f22572e41a7dd03387a2d5025f
+--- /dev/null
++++ b/dist/scroll-resistance-trainer/popup.html
+@@ -0,0 +1,24 @@
++<!DOCTYPE html>
++<html lang="en">
++  <head>
++    <meta charset="UTF-8" />
++    <title>Scroll Resistance</title>
++    <link rel="stylesheet" href="popup.css" />
++  </head>
++  <body>
++    <main>
++      <section class="mode">
++        <button id="whitelist-mode" data-mode="whitelist">Whitelist Mode</button>
++        <button id="blacklist-mode" data-mode="blacklist">Blacklist Mode</button>
++      </section>
++      <section class="status">
++        <p id="site-message">Loading...</p>
++        <button id="toggle-site" disabled>Add this site</button>
++      </section>
++      <section class="actions">
++        <button id="open-settings">Settings</button>
++      </section>
++    </main>
++    <script src="popup.js" defer></script>
++  </body>
++</html>
+diff --git a/dist/scroll-resistance-trainer/popup.js b/dist/scroll-resistance-trainer/popup.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..668abffb21de4aefeb6f4f41f2887857b4714c42
+--- /dev/null
++++ b/dist/scroll-resistance-trainer/popup.js
+@@ -0,0 +1,137 @@
++const DEFAULT_SETTINGS = {
++  mode: 'whitelist',
++  whitelist: [],
++  blacklist: [],
++  resistance: {
++    baseMultiplier: 1.5,
++    incrementPerScroll: 0.2,
++    maxMultiplier: 20,
++    recoveryPerSecond: 1,
++    distanceWeight: 120
++  }
++};
++
++const whitelistButton = document.getElementById('whitelist-mode');
++const blacklistButton = document.getElementById('blacklist-mode');
++const toggleSiteButton = document.getElementById('toggle-site');
++const siteMessage = document.getElementById('site-message');
++const settingsButton = document.getElementById('open-settings');
++
++let currentMode = DEFAULT_SETTINGS.mode;
++let whitelist = [...DEFAULT_SETTINGS.whitelist];
++let blacklist = [...DEFAULT_SETTINGS.blacklist];
++let currentHost = null;
++
++function normalizeHostFromUrl(url) {
++  try {
++    const { hostname } = new URL(url);
++    return hostname ? hostname.toLowerCase() : null;
++  } catch (error) {
++    return null;
++  }
++}
++
++function updateModeButtons() {
++  if (currentMode === 'whitelist') {
++    whitelistButton.classList.add('active');
++    blacklistButton.classList.remove('active');
++  } else {
++    blacklistButton.classList.add('active');
++    whitelistButton.classList.remove('active');
++  }
++}
++
++function updateSiteMessage() {
++  if (!currentHost) {
++    siteMessage.textContent = 'This page cannot be managed.';
++    toggleSiteButton.disabled = true;
++    return;
++  }
++
++  if (currentMode === 'whitelist') {
++    const isWhitelisted = whitelist.includes(currentHost);
++    siteMessage.textContent = isWhitelisted
++      ? `${currentHost} is whitelisted.`
++      : `${currentHost} will have resistance.`;
++    toggleSiteButton.textContent = isWhitelisted ? 'Already whitelisted' : 'Whitelist this site';
++    toggleSiteButton.disabled = isWhitelisted;
++  } else {
++    const isBlacklisted = blacklist.includes(currentHost);
++    siteMessage.textContent = isBlacklisted
++      ? `${currentHost} will face resistance.`
++      : `${currentHost} is unaffected.`;
++    toggleSiteButton.textContent = isBlacklisted ? 'Already blacklisted' : 'Blacklist this site';
++    toggleSiteButton.disabled = isBlacklisted;
++  }
++}
++
++function loadSettings() {
++  chrome.storage.sync.get(null, (items) => {
++    if (chrome.runtime.lastError) {
++      console.error('Failed to load settings', chrome.runtime.lastError);
++      siteMessage.textContent = 'Unable to load settings.';
++      return;
++    }
++
++    currentMode = items.mode ?? DEFAULT_SETTINGS.mode;
++    whitelist = Array.isArray(items.whitelist) ? items.whitelist : [...DEFAULT_SETTINGS.whitelist];
++    blacklist = Array.isArray(items.blacklist) ? items.blacklist : [...DEFAULT_SETTINGS.blacklist];
++
++    updateModeButtons();
++    updateSiteMessage();
++  });
++}
++
++function setMode(mode) {
++  if (mode === currentMode) {
++    return;
++  }
++
++  currentMode = mode;
++  updateModeButtons();
++  updateSiteMessage();
++  chrome.storage.sync.set({ mode });
++}
++
++function addCurrentSite() {
++  if (!currentHost) {
++    return;
++  }
++
++  if (currentMode === 'whitelist') {
++    if (!whitelist.includes(currentHost)) {
++      const updated = [...whitelist, currentHost];
++      whitelist = updated;
++      chrome.storage.sync.set({ whitelist: updated }, () => {
++        updateSiteMessage();
++      });
++    }
++  } else {
++    if (!blacklist.includes(currentHost)) {
++      const updated = [...blacklist, currentHost];
++      blacklist = updated;
++      chrome.storage.sync.set({ blacklist: updated }, () => {
++        updateSiteMessage();
++      });
++    }
++  }
++}
++
++function init() {
++  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
++    const [activeTab] = tabs;
++    if (activeTab && activeTab.url) {
++      currentHost = normalizeHostFromUrl(activeTab.url);
++    }
++    loadSettings();
++  });
++
++  whitelistButton.addEventListener('click', () => setMode('whitelist'));
++  blacklistButton.addEventListener('click', () => setMode('blacklist'));
++  toggleSiteButton.addEventListener('click', addCurrentSite);
++  settingsButton.addEventListener('click', () => {
++    chrome.runtime.openOptionsPage();
++  });
++}
++
++document.addEventListener('DOMContentLoaded', init);
+diff --git a/extension/background.js b/extension/background.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..0c44ead838408a4c3fa4f269666d4aef36c1132c
+--- /dev/null
++++ b/extension/background.js
+@@ -0,0 +1,75 @@
++const DEFAULT_SETTINGS = {
++  mode: 'whitelist',
++  whitelist: [],
++  blacklist: [],
++  resistance: {
++    baseMultiplier: 1.5,
++    incrementPerScroll: 0.2,
++    maxMultiplier: 20,
++    recoveryPerSecond: 1,
++    distanceWeight: 120
++  }
++};
++
++function ensureDefaults() {
++  chrome.storage.sync.get(null, (items) => {
++    if (chrome.runtime.lastError) {
++      console.error('Failed to read storage', chrome.runtime.lastError);
++      return;
++    }
++
++    const updates = {};
++
++    if (items.mode !== 'whitelist' && items.mode !== 'blacklist') {
++      updates.mode = DEFAULT_SETTINGS.mode;
++    }
++
++    if (!Array.isArray(items.whitelist)) {
++      updates.whitelist = DEFAULT_SETTINGS.whitelist;
++    }
++
++    if (!Array.isArray(items.blacklist)) {
++      updates.blacklist = DEFAULT_SETTINGS.blacklist;
++    }
++
++    const storedResistance = items.resistance || {};
++    const mergedResistance = {
++      baseMultiplier:
++        Number.isFinite(storedResistance.baseMultiplier) && storedResistance.baseMultiplier > 0
++          ? storedResistance.baseMultiplier
++          : DEFAULT_SETTINGS.resistance.baseMultiplier,
++      incrementPerScroll:
++        Number.isFinite(storedResistance.incrementPerScroll) && storedResistance.incrementPerScroll >= 0
++          ? storedResistance.incrementPerScroll
++          : DEFAULT_SETTINGS.resistance.incrementPerScroll,
++      maxMultiplier:
++        Number.isFinite(storedResistance.maxMultiplier) && storedResistance.maxMultiplier >= 1
++          ? storedResistance.maxMultiplier
++          : DEFAULT_SETTINGS.resistance.maxMultiplier,
++      recoveryPerSecond:
++        Number.isFinite(storedResistance.recoveryPerSecond) && storedResistance.recoveryPerSecond >= 0
++          ? storedResistance.recoveryPerSecond
++          : DEFAULT_SETTINGS.resistance.recoveryPerSecond,
++      distanceWeight:
++        Number.isFinite(storedResistance.distanceWeight) && storedResistance.distanceWeight > 0
++          ? storedResistance.distanceWeight
++          : DEFAULT_SETTINGS.resistance.distanceWeight
++    };
++
++    if (JSON.stringify(storedResistance) !== JSON.stringify(mergedResistance)) {
++      updates.resistance = mergedResistance;
++    }
++
++    if (Object.keys(updates).length > 0) {
++      chrome.storage.sync.set(updates);
++    }
++  });
++}
++
++chrome.runtime.onInstalled.addListener(() => {
++  ensureDefaults();
++});
++
++chrome.runtime.onStartup.addListener(() => {
++  ensureDefaults();
++});
+diff --git a/extension/content.js b/extension/content.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..d263b077831d32474a1b39fb6927dc3335149489
+--- /dev/null
++++ b/extension/content.js
+@@ -0,0 +1,183 @@
++const DEFAULT_SETTINGS = {
++  mode: 'whitelist',
++  whitelist: [],
++  blacklist: [],
++  resistance: {
++    baseMultiplier: 1.5,
++    incrementPerScroll: 0.2,
++    maxMultiplier: 20,
++    recoveryPerSecond: 1,
++    distanceWeight: 120
++  }
++};
++
++let settings = { ...DEFAULT_SETTINGS };
++let enabled = false;
++let multiplier = DEFAULT_SETTINGS.resistance.baseMultiplier;
++let scrollUnits = 0;
++let recoveryTimer = null;
++
++function cloneSettings(value) {
++  return JSON.parse(JSON.stringify(value));
++}
++
++function getHostname() {
++  return window.location.hostname.toLowerCase();
++}
++
++function isHostInList(host, list) {
++  return Array.isArray(list) && list.some((entry) => entry === host);
++}
++
++function determineEnabled() {
++  const host = getHostname();
++  if (settings.mode === 'whitelist') {
++    return !isHostInList(host, settings.whitelist);
++  }
++  return isHostInList(host, settings.blacklist);
++}
++
++function sanitizeResistanceConfig(raw = {}) {
++  const baseMultiplier = Number.isFinite(raw.baseMultiplier) && raw.baseMultiplier > 0
++    ? raw.baseMultiplier
++    : DEFAULT_SETTINGS.resistance.baseMultiplier;
++  const incrementPerScroll = Number.isFinite(raw.incrementPerScroll) && raw.incrementPerScroll >= 0
++    ? raw.incrementPerScroll
++    : DEFAULT_SETTINGS.resistance.incrementPerScroll;
++  const maxMultiplier = Number.isFinite(raw.maxMultiplier) && raw.maxMultiplier >= 1
++    ? raw.maxMultiplier
++    : DEFAULT_SETTINGS.resistance.maxMultiplier;
++  const recoveryPerSecond = Number.isFinite(raw.recoveryPerSecond) && raw.recoveryPerSecond >= 0
++    ? raw.recoveryPerSecond
++    : DEFAULT_SETTINGS.resistance.recoveryPerSecond;
++  const distanceWeight = Number.isFinite(raw.distanceWeight) && raw.distanceWeight > 0
++    ? raw.distanceWeight
++    : DEFAULT_SETTINGS.resistance.distanceWeight;
++
++  return { baseMultiplier, incrementPerScroll, maxMultiplier, recoveryPerSecond, distanceWeight };
++}
++
++function updateMultiplier() {
++  const { baseMultiplier, incrementPerScroll, maxMultiplier } = settings.resistance;
++  multiplier = Math.min(maxMultiplier, baseMultiplier + scrollUnits * incrementPerScroll);
++}
++
++function scheduleRecovery() {
++  if (recoveryTimer) {
++    return;
++  }
++
++  const intervalMs = 1000;
++  recoveryTimer = setInterval(() => {
++    if (!enabled) {
++      scrollUnits = 0;
++      updateMultiplier();
++      clearInterval(recoveryTimer);
++      recoveryTimer = null;
++      return;
++    }
++
++    if (scrollUnits <= 0) {
++      scrollUnits = 0;
++      updateMultiplier();
++      return;
++    }
++
++    const { recoveryPerSecond } = settings.resistance;
++    scrollUnits = Math.max(0, scrollUnits - recoveryPerSecond);
++    updateMultiplier();
++  }, intervalMs);
++}
++
++function stopRecovery() {
++  if (recoveryTimer) {
++    clearInterval(recoveryTimer);
++    recoveryTimer = null;
++  }
++}
++
++function applySettings(newSettings) {
++  settings = {
++    mode: newSettings.mode === 'blacklist' ? 'blacklist' : DEFAULT_SETTINGS.mode,
++    whitelist: Array.isArray(newSettings.whitelist)
++      ? cloneSettings(newSettings.whitelist)
++      : cloneSettings(DEFAULT_SETTINGS.whitelist),
++    blacklist: Array.isArray(newSettings.blacklist)
++      ? cloneSettings(newSettings.blacklist)
++      : cloneSettings(DEFAULT_SETTINGS.blacklist),
++    resistance: sanitizeResistanceConfig(newSettings.resistance)
++  };
++
++  enabled = determineEnabled();
++  scrollUnits = 0;
++  updateMultiplier();
++
++  if (enabled) {
++    scheduleRecovery();
++  } else {
++    stopRecovery();
++  }
++}
++
++function handleWheel(event) {
++  if (!enabled) {
++    return;
++  }
++
++  if (event.defaultPrevented || event.ctrlKey || event.metaKey) {
++    return;
++  }
++
++  const deltaX = event.deltaX / multiplier;
++  const deltaY = event.deltaY / multiplier;
++
++  event.preventDefault();
++  window.scrollBy({ left: deltaX, top: deltaY, behavior: 'auto' });
++
++  const distance = Math.max(Math.abs(event.deltaX), Math.abs(event.deltaY));
++  const { distanceWeight } = settings.resistance;
++  const weight = distanceWeight > 0 ? distanceWeight : 1;
++  const gain = distance > 0 ? Math.max(1, distance / weight) : 1;
++  scrollUnits += gain;
++  updateMultiplier();
++  scheduleRecovery();
++}
++
++function init() {
++  chrome.storage.sync.get(null, (items) => {
++    if (chrome.runtime.lastError) {
++      console.error('Scroll Resistance: failed to read settings', chrome.runtime.lastError);
++      return;
++    }
++    applySettings(items);
++  });
++
++  chrome.storage.onChanged.addListener((changes, areaName) => {
++    if (areaName !== 'sync') {
++      return;
++    }
++
++    const updated = { ...settings };
++    if (Object.prototype.hasOwnProperty.call(changes, 'mode')) {
++      updated.mode = changes.mode.newValue;
++    }
++    if (Object.prototype.hasOwnProperty.call(changes, 'whitelist')) {
++      updated.whitelist = Array.isArray(changes.whitelist.newValue)
++        ? cloneSettings(changes.whitelist.newValue)
++        : cloneSettings(DEFAULT_SETTINGS.whitelist);
++    }
++    if (Object.prototype.hasOwnProperty.call(changes, 'blacklist')) {
++      updated.blacklist = Array.isArray(changes.blacklist.newValue)
++        ? cloneSettings(changes.blacklist.newValue)
++        : cloneSettings(DEFAULT_SETTINGS.blacklist);
++    }
++    if (Object.prototype.hasOwnProperty.call(changes, 'resistance')) {
++      updated.resistance = sanitizeResistanceConfig(changes.resistance.newValue);
++    }
++    applySettings(updated);
++  });
++
++  window.addEventListener('wheel', handleWheel, { passive: false });
++}
++
++init();
+diff --git a/extension/manifest.json b/extension/manifest.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..e2e351fc7adc5afc2b4b9916f7a90f87bebd189f
+--- /dev/null
++++ b/extension/manifest.json
+@@ -0,0 +1,28 @@
++{
++  "manifest_version": 3,
++  "name": "Scroll Resistance Trainer",
++  "version": "0.1.0",
++  "description": "Increase scroll resistance the longer you stay on distracting sites.",
++  "permissions": [
++    "storage",
++    "tabs"
++  ],
++  "host_permissions": [
++    "<all_urls>"
++  ],
++  "background": {
++    "service_worker": "background.js"
++  },
++  "action": {
++    "default_title": "Scroll Resistance Trainer",
++    "default_popup": "popup.html"
++  },
++  "options_page": "options.html",
++  "content_scripts": [
++    {
++      "matches": ["<all_urls>"],
++      "js": ["content.js"],
++      "run_at": "document_start"
++    }
++  ]
++}
+diff --git a/extension/options.css b/extension/options.css
+new file mode 100644
+index 0000000000000000000000000000000000000000..73ec360f43b5384d955ae0f1ac14025c55e7d9d1
+--- /dev/null
++++ b/extension/options.css
+@@ -0,0 +1,127 @@
++body {
++  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
++  background: #0d1018;
++  color: #f5f7ff;
++  margin: 0;
++  padding: 2rem;
++}
++
++main {
++  max-width: 640px;
++  margin: 0 auto;
++  display: flex;
++  flex-direction: column;
++  gap: 2rem;
++}
++
++h1 {
++  margin: 0;
++  font-size: 1.8rem;
++}
++
++h2 {
++  font-size: 1.2rem;
++  margin-bottom: 0.75rem;
++}
++
++section {
++  background: rgba(23, 30, 46, 0.9);
++  padding: 1.5rem;
++  border-radius: 12px;
++  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
++}
++
++label {
++  display: block;
++  margin-bottom: 0.5rem;
++  line-height: 1.4;
++}
++
++input[type='text'],
++input[type='number'] {
++  width: 100%;
++  margin-top: 0.35rem;
++  padding: 0.5rem;
++  border-radius: 6px;
++  border: 1px solid rgba(255, 255, 255, 0.1);
++  background: rgba(10, 14, 22, 0.8);
++  color: inherit;
++}
++
++form {
++  display: flex;
++  gap: 0.5rem;
++  margin-bottom: 1rem;
++}
++
++form button,
++button {
++  background: #2b8a3e;
++  color: #fff;
++  border: none;
++  border-radius: 6px;
++  padding: 0.6rem 1rem;
++  cursor: pointer;
++  transition: background 0.2s ease;
++}
++
++button.secondary {
++  background: #22304a;
++}
++
++button:hover {
++  background: #237233;
++}
++
++button.secondary:hover {
++  background: #1a2638;
++}
++
++.site-list {
++  list-style: none;
++  padding: 0;
++  margin: 0;
++  display: flex;
++  flex-direction: column;
++  gap: 0.5rem;
++}
++
++.site-list li {
++  display: flex;
++  justify-content: space-between;
++  align-items: center;
++  background: rgba(12, 16, 26, 0.8);
++  padding: 0.6rem 0.75rem;
++  border-radius: 6px;
++}
++
++.site-list li.empty {
++  justify-content: center;
++  color: rgba(245, 247, 255, 0.6);
++}
++
++.site-list button {
++  background: #b91c1c;
++}
++
++.site-list button:hover {
++  background: #991b1b;
++}
++
++.resistance-grid {
++  display: grid;
++  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
++  gap: 1rem;
++}
++
++.resistance-actions {
++  display: flex;
++  gap: 0.75rem;
++  margin-top: 1rem;
++}
++
++.status {
++  margin-top: 0.75rem;
++  min-height: 1.25rem;
++  color: #8fd19e;
++}
+diff --git a/extension/options.html b/extension/options.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..f49bbe582c459ac2429921a14eaf9ed7e75aa320
+--- /dev/null
++++ b/extension/options.html
+@@ -0,0 +1,74 @@
++<!DOCTYPE html>
++<html lang="en">
++  <head>
++    <meta charset="UTF-8" />
++    <title>Scroll Resistance Settings</title>
++    <link rel="stylesheet" href="options.css" />
++  </head>
++  <body>
++    <main>
++      <h1>Scroll Resistance</h1>
++      <section>
++        <h2>Mode</h2>
++        <label>
++          <input type="radio" name="mode" value="whitelist" />
++          Whitelist mode (resistance everywhere except allowed sites)
++        </label>
++        <label>
++          <input type="radio" name="mode" value="blacklist" />
++          Blacklist mode (resistance only on selected sites)
++        </label>
++      </section>
++
++      <section>
++        <h2>Whitelist</h2>
++        <form id="whitelist-form">
++          <input type="text" id="whitelist-input" placeholder="example.com" />
++          <button type="submit">Add</button>
++        </form>
++        <ul id="whitelist-list" class="site-list"></ul>
++      </section>
++
++      <section>
++        <h2>Blacklist</h2>
++        <form id="blacklist-form">
++          <input type="text" id="blacklist-input" placeholder="example.com" />
++          <button type="submit">Add</button>
++        </form>
++        <ul id="blacklist-list" class="site-list"></ul>
++      </section>
++
++      <section>
++        <h2>Resistance settings</h2>
++        <div class="resistance-grid">
++          <label>
++            Base multiplier
++            <input type="number" id="base-multiplier" step="0.1" min="1" />
++          </label>
++          <label>
++            Increment per scroll
++            <input type="number" id="increment-per-scroll" step="0.05" min="0" />
++          </label>
++          <label>
++            Maximum multiplier
++            <input type="number" id="max-multiplier" step="0.5" min="1" />
++          </label>
++          <label>
++            Recovery per second
++            <input type="number" id="recovery-per-second" step="0.1" min="0" />
++          </label>
++          <label>
++            Distance weight (pixels per resistance unit)
++            <input type="number" id="distance-weight" step="10" min="1" />
++          </label>
++        </div>
++        <div class="resistance-actions">
++          <button id="save-resistance">Save resistance</button>
++          <button id="reset-resistance" class="secondary">Reset defaults</button>
++        </div>
++        <p id="resistance-status" class="status"></p>
++      </section>
++    </main>
++    <script src="options.js" defer></script>
++  </body>
++</html>
+diff --git a/extension/options.js b/extension/options.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..02779a9edd50f2ed5e771e1e16d4b140177f4171
+--- /dev/null
++++ b/extension/options.js
+@@ -0,0 +1,217 @@
++const DEFAULT_SETTINGS = {
++  mode: 'whitelist',
++  whitelist: [],
++  blacklist: [],
++  resistance: {
++    baseMultiplier: 1.5,
++    incrementPerScroll: 0.2,
++    maxMultiplier: 20,
++    recoveryPerSecond: 1,
++    distanceWeight: 120
++  }
++};
++
++const modeInputs = document.querySelectorAll('input[name="mode"]');
++const whitelistForm = document.getElementById('whitelist-form');
++const whitelistInput = document.getElementById('whitelist-input');
++const whitelistList = document.getElementById('whitelist-list');
++const blacklistForm = document.getElementById('blacklist-form');
++const blacklistInput = document.getElementById('blacklist-input');
++const blacklistList = document.getElementById('blacklist-list');
++const baseMultiplierInput = document.getElementById('base-multiplier');
++const incrementPerScrollInput = document.getElementById('increment-per-scroll');
++const maxMultiplierInput = document.getElementById('max-multiplier');
++const recoveryPerSecondInput = document.getElementById('recovery-per-second');
++const distanceWeightInput = document.getElementById('distance-weight');
++const saveResistanceButton = document.getElementById('save-resistance');
++const resetResistanceButton = document.getElementById('reset-resistance');
++const resistanceStatus = document.getElementById('resistance-status');
++
++let currentSettings = cloneDefaults(DEFAULT_SETTINGS);
++
++function cloneDefaults(value) {
++  return JSON.parse(JSON.stringify(value));
++}
++
++function normalizeHost(value) {
++  if (!value) {
++    return null;
++  }
++
++  let host = value.trim().toLowerCase();
++  if (!host) {
++    return null;
++  }
++
++  if (!host.includes('://')) {
++    host = `https://${host}`;
++  }
++
++  try {
++    return new URL(host).hostname;
++  } catch (error) {
++    return null;
++  }
++}
++
++function renderMode() {
++  modeInputs.forEach((input) => {
++    input.checked = input.value === currentSettings.mode;
++  });
++}
++
++function renderList(listElement, sites, type) {
++  listElement.textContent = '';
++  if (!Array.isArray(sites) || sites.length === 0) {
++    const empty = document.createElement('li');
++    empty.className = 'empty';
++    empty.textContent = 'No sites yet.';
++    listElement.appendChild(empty);
++    return;
++  }
++
++  sites
++    .slice()
++    .sort((a, b) => a.localeCompare(b))
++    .forEach((host) => {
++      const li = document.createElement('li');
++      li.textContent = host;
++      const button = document.createElement('button');
++      button.type = 'button';
++      button.textContent = 'Remove';
++      button.addEventListener('click', () => removeHost(type, host));
++      li.appendChild(button);
++      listElement.appendChild(li);
++    });
++}
++
++function renderResistance() {
++  const { baseMultiplier, incrementPerScroll, maxMultiplier, recoveryPerSecond, distanceWeight } =
++    currentSettings.resistance;
++  baseMultiplierInput.value = baseMultiplier;
++  incrementPerScrollInput.value = incrementPerScroll;
++  maxMultiplierInput.value = maxMultiplier;
++  recoveryPerSecondInput.value = recoveryPerSecond;
++  distanceWeightInput.value = distanceWeight;
++}
++
++function saveSettings(partial) {
++  chrome.storage.sync.set(partial, () => {
++    if (chrome.runtime.lastError) {
++      console.error('Failed to save settings', chrome.runtime.lastError);
++    }
++  });
++}
++
++function removeHost(type, host) {
++  const list = currentSettings[type];
++  const index = list.indexOf(host);
++  if (index >= 0) {
++    list.splice(index, 1);
++    renderList(type === 'whitelist' ? whitelistList : blacklistList, list, type);
++    saveSettings({ [type]: list });
++  }
++}
++
++function handleListSubmit(event, type) {
++  event.preventDefault();
++  const input = type === 'whitelist' ? whitelistInput : blacklistInput;
++  const host = normalizeHost(input.value);
++  if (!host) {
++    input.value = '';
++    return;
++  }
++
++  const list = currentSettings[type];
++  if (!list.includes(host)) {
++    list.push(host);
++    renderList(type === 'whitelist' ? whitelistList : blacklistList, list, type);
++    saveSettings({ [type]: list });
++  }
++
++  input.value = '';
++}
++
++function handleModeChange(event) {
++  const { value } = event.target;
++  if (value === 'whitelist' || value === 'blacklist') {
++    currentSettings.mode = value;
++    saveSettings({ mode: value });
++  }
++}
++
++function handleSaveResistance() {
++  const base = Number.parseFloat(baseMultiplierInput.value);
++  const increment = Number.parseFloat(incrementPerScrollInput.value);
++  const max = Number.parseFloat(maxMultiplierInput.value);
++  const recovery = Number.parseFloat(recoveryPerSecondInput.value);
++  const distanceWeight = Number.parseFloat(distanceWeightInput.value);
++
++  const resistance = {
++    baseMultiplier: Number.isFinite(base) && base > 0 ? base : DEFAULT_SETTINGS.resistance.baseMultiplier,
++    incrementPerScroll:
++      Number.isFinite(increment) && increment >= 0 ? increment : DEFAULT_SETTINGS.resistance.incrementPerScroll,
++    maxMultiplier: Number.isFinite(max) && max >= 1 ? max : DEFAULT_SETTINGS.resistance.maxMultiplier,
++    recoveryPerSecond:
++      Number.isFinite(recovery) && recovery >= 0 ? recovery : DEFAULT_SETTINGS.resistance.recoveryPerSecond,
++    distanceWeight:
++      Number.isFinite(distanceWeight) && distanceWeight > 0
++        ? distanceWeight
++        : DEFAULT_SETTINGS.resistance.distanceWeight
++  };
++
++  currentSettings.resistance = resistance;
++  saveSettings({ resistance });
++  resistanceStatus.textContent = 'Resistance settings saved.';
++  setTimeout(() => {
++    resistanceStatus.textContent = '';
++  }, 2000);
++}
++
++function handleResetResistance() {
++  currentSettings.resistance = cloneDefaults(DEFAULT_SETTINGS.resistance);
++  renderResistance();
++  saveSettings({ resistance: currentSettings.resistance });
++  resistanceStatus.textContent = 'Defaults restored.';
++  setTimeout(() => {
++    resistanceStatus.textContent = '';
++  }, 2000);
++}
++
++function hydrate() {
++  chrome.storage.sync.get(null, (items) => {
++    if (chrome.runtime.lastError) {
++      console.error('Failed to load settings', chrome.runtime.lastError);
++      return;
++    }
++
++    currentSettings = {
++      mode: items.mode ?? DEFAULT_SETTINGS.mode,
++      whitelist: Array.isArray(items.whitelist) ? items.whitelist.slice() : cloneDefaults(DEFAULT_SETTINGS.whitelist),
++      blacklist: Array.isArray(items.blacklist) ? items.blacklist.slice() : cloneDefaults(DEFAULT_SETTINGS.blacklist),
++      resistance: {
++        baseMultiplier: items.resistance?.baseMultiplier ?? DEFAULT_SETTINGS.resistance.baseMultiplier,
++        incrementPerScroll: items.resistance?.incrementPerScroll ?? DEFAULT_SETTINGS.resistance.incrementPerScroll,
++        maxMultiplier: items.resistance?.maxMultiplier ?? DEFAULT_SETTINGS.resistance.maxMultiplier,
++        recoveryPerSecond: items.resistance?.recoveryPerSecond ?? DEFAULT_SETTINGS.resistance.recoveryPerSecond,
++        distanceWeight: items.resistance?.distanceWeight ?? DEFAULT_SETTINGS.resistance.distanceWeight
++      }
++    };
++
++    renderMode();
++    renderList(whitelistList, currentSettings.whitelist, 'whitelist');
++    renderList(blacklistList, currentSettings.blacklist, 'blacklist');
++    renderResistance();
++  });
++}
++
++function init() {
++  hydrate();
++  whitelistForm.addEventListener('submit', (event) => handleListSubmit(event, 'whitelist'));
++  blacklistForm.addEventListener('submit', (event) => handleListSubmit(event, 'blacklist'));
++  modeInputs.forEach((input) => input.addEventListener('change', handleModeChange));
++  saveResistanceButton.addEventListener('click', handleSaveResistance);
++  resetResistanceButton.addEventListener('click', handleResetResistance);
++}
++
++document.addEventListener('DOMContentLoaded', init);
+diff --git a/extension/popup.css b/extension/popup.css
+new file mode 100644
+index 0000000000000000000000000000000000000000..b2fce638ba622e4045fa11ae50c6a8e956ada915
+--- /dev/null
++++ b/extension/popup.css
+@@ -0,0 +1,73 @@
++body {
++  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
++  margin: 0;
++  padding: 0.75rem;
++  background: #10131a;
++  color: #f5f7ff;
++  min-width: 220px;
++}
++
++main {
++  display: flex;
++  flex-direction: column;
++  gap: 0.75rem;
++}
++
++button {
++  background: #2b8a3e;
++  color: #fff;
++  border: none;
++  border-radius: 6px;
++  padding: 0.5rem;
++  font-size: 0.95rem;
++  cursor: pointer;
++  transition: background 0.2s ease;
++}
++
++button:hover {
++  background: #237233;
++}
++
++button.secondary {
++  background: #22304a;
++}
++
++button.secondary:hover {
++  background: #1a2638;
++}
++
++.mode {
++  display: flex;
++  gap: 0.5rem;
++}
++
++.mode button {
++  flex: 1;
++}
++
++.mode button.active {
++  background: #0d6efd;
++}
++
++.status p {
++  margin: 0 0 0.5rem;
++  font-size: 0.9rem;
++}
++
++#toggle-site[disabled] {
++  opacity: 0.6;
++  cursor: default;
++}
++
++.actions {
++  display: flex;
++  justify-content: flex-end;
++}
++
++#open-settings {
++  background: #22304a;
++}
++
++#open-settings:hover {
++  background: #1a2638;
++}
+diff --git a/extension/popup.html b/extension/popup.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..104552a8bbe4a1f22572e41a7dd03387a2d5025f
+--- /dev/null
++++ b/extension/popup.html
+@@ -0,0 +1,24 @@
++<!DOCTYPE html>
++<html lang="en">
++  <head>
++    <meta charset="UTF-8" />
++    <title>Scroll Resistance</title>
++    <link rel="stylesheet" href="popup.css" />
++  </head>
++  <body>
++    <main>
++      <section class="mode">
++        <button id="whitelist-mode" data-mode="whitelist">Whitelist Mode</button>
++        <button id="blacklist-mode" data-mode="blacklist">Blacklist Mode</button>
++      </section>
++      <section class="status">
++        <p id="site-message">Loading...</p>
++        <button id="toggle-site" disabled>Add this site</button>
++      </section>
++      <section class="actions">
++        <button id="open-settings">Settings</button>
++      </section>
++    </main>
++    <script src="popup.js" defer></script>
++  </body>
++</html>
+diff --git a/extension/popup.js b/extension/popup.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..668abffb21de4aefeb6f4f41f2887857b4714c42
+--- /dev/null
++++ b/extension/popup.js
+@@ -0,0 +1,137 @@
++const DEFAULT_SETTINGS = {
++  mode: 'whitelist',
++  whitelist: [],
++  blacklist: [],
++  resistance: {
++    baseMultiplier: 1.5,
++    incrementPerScroll: 0.2,
++    maxMultiplier: 20,
++    recoveryPerSecond: 1,
++    distanceWeight: 120
++  }
++};
++
++const whitelistButton = document.getElementById('whitelist-mode');
++const blacklistButton = document.getElementById('blacklist-mode');
++const toggleSiteButton = document.getElementById('toggle-site');
++const siteMessage = document.getElementById('site-message');
++const settingsButton = document.getElementById('open-settings');
++
++let currentMode = DEFAULT_SETTINGS.mode;
++let whitelist = [...DEFAULT_SETTINGS.whitelist];
++let blacklist = [...DEFAULT_SETTINGS.blacklist];
++let currentHost = null;
++
++function normalizeHostFromUrl(url) {
++  try {
++    const { hostname } = new URL(url);
++    return hostname ? hostname.toLowerCase() : null;
++  } catch (error) {
++    return null;
++  }
++}
++
++function updateModeButtons() {
++  if (currentMode === 'whitelist') {
++    whitelistButton.classList.add('active');
++    blacklistButton.classList.remove('active');
++  } else {
++    blacklistButton.classList.add('active');
++    whitelistButton.classList.remove('active');
++  }
++}
++
++function updateSiteMessage() {
++  if (!currentHost) {
++    siteMessage.textContent = 'This page cannot be managed.';
++    toggleSiteButton.disabled = true;
++    return;
++  }
++
++  if (currentMode === 'whitelist') {
++    const isWhitelisted = whitelist.includes(currentHost);
++    siteMessage.textContent = isWhitelisted
++      ? `${currentHost} is whitelisted.`
++      : `${currentHost} will have resistance.`;
++    toggleSiteButton.textContent = isWhitelisted ? 'Already whitelisted' : 'Whitelist this site';
++    toggleSiteButton.disabled = isWhitelisted;
++  } else {
++    const isBlacklisted = blacklist.includes(currentHost);
++    siteMessage.textContent = isBlacklisted
++      ? `${currentHost} will face resistance.`
++      : `${currentHost} is unaffected.`;
++    toggleSiteButton.textContent = isBlacklisted ? 'Already blacklisted' : 'Blacklist this site';
++    toggleSiteButton.disabled = isBlacklisted;
++  }
++}
++
++function loadSettings() {
++  chrome.storage.sync.get(null, (items) => {
++    if (chrome.runtime.lastError) {
++      console.error('Failed to load settings', chrome.runtime.lastError);
++      siteMessage.textContent = 'Unable to load settings.';
++      return;
++    }
++
++    currentMode = items.mode ?? DEFAULT_SETTINGS.mode;
++    whitelist = Array.isArray(items.whitelist) ? items.whitelist : [...DEFAULT_SETTINGS.whitelist];
++    blacklist = Array.isArray(items.blacklist) ? items.blacklist : [...DEFAULT_SETTINGS.blacklist];
++
++    updateModeButtons();
++    updateSiteMessage();
++  });
++}
++
++function setMode(mode) {
++  if (mode === currentMode) {
++    return;
++  }
++
++  currentMode = mode;
++  updateModeButtons();
++  updateSiteMessage();
++  chrome.storage.sync.set({ mode });
++}
++
++function addCurrentSite() {
++  if (!currentHost) {
++    return;
++  }
++
++  if (currentMode === 'whitelist') {
++    if (!whitelist.includes(currentHost)) {
++      const updated = [...whitelist, currentHost];
++      whitelist = updated;
++      chrome.storage.sync.set({ whitelist: updated }, () => {
++        updateSiteMessage();
++      });
++    }
++  } else {
++    if (!blacklist.includes(currentHost)) {
++      const updated = [...blacklist, currentHost];
++      blacklist = updated;
++      chrome.storage.sync.set({ blacklist: updated }, () => {
++        updateSiteMessage();
++      });
++    }
++  }
++}
++
++function init() {
++  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
++    const [activeTab] = tabs;
++    if (activeTab && activeTab.url) {
++      currentHost = normalizeHostFromUrl(activeTab.url);
++    }
++    loadSettings();
++  });
++
++  whitelistButton.addEventListener('click', () => setMode('whitelist'));
++  blacklistButton.addEventListener('click', () => setMode('blacklist'));
++  toggleSiteButton.addEventListener('click', addCurrentSite);
++  settingsButton.addEventListener('click', () => {
++    chrome.runtime.openOptionsPage();
++  });
++}
++
++document.addEventListener('DOMContentLoaded', init);

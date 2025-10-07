@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Scroll Resistance Settings</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Scroll Resistance</h1>
+      <section>
+        <h2>Mode</h2>
+        <label>
+          <input type="radio" name="mode" value="whitelist" />
+          Whitelist mode (resistance everywhere except allowed sites)
+        </label>
+        <label>
+          <input type="radio" name="mode" value="blacklist" />
+          Blacklist mode (resistance only on selected sites)
+        </label>
+      </section>
+
+      <section>
+        <h2>Whitelist</h2>
+        <form id="whitelist-form">
+          <input type="text" id="whitelist-input" placeholder="example.com" />
+          <button type="submit">Add</button>
+        </form>
+        <ul id="whitelist-list" class="site-list"></ul>
+      </section>
+
+      <section>
+        <h2>Blacklist</h2>
+        <form id="blacklist-form">
+          <input type="text" id="blacklist-input" placeholder="example.com" />
+          <button type="submit">Add</button>
+        </form>
+        <ul id="blacklist-list" class="site-list"></ul>
+      </section>
+
+      <section>
+        <h2>Resistance settings</h2>
+        <div class="resistance-grid">
+          <label>
+            Base multiplier
+            <input type="number" id="base-multiplier" step="0.1" min="1" />
+          </label>
+          <label>
+            Increment per scroll
+            <input type="number" id="increment-per-scroll" step="0.05" min="0" />
+          </label>
+          <label>
+            Maximum multiplier
+            <input type="number" id="max-multiplier" step="0.5" min="1" />
+          </label>
+          <label>
+            Recovery per second
+            <input type="number" id="recovery-per-second" step="0.1" min="0" />
+          </label>
+          <label>
+            Distance weight (pixels per resistance unit)
+            <input type="number" id="distance-weight" step="10" min="1" />
+          </label>
+        </div>
+        <div class="resistance-actions">
+          <button id="save-resistance">Save resistance</button>
+          <button id="reset-resistance" class="secondary">Reset defaults</button>
+        </div>
+        <p id="resistance-status" class="status"></p>
+      </section>
+    </main>
+    <script src="options.js" defer></script>
+  </body>
+</html>
