@@ -73,186 +73,176 @@ index 0000000000000000000000000000000000000000..d0cdd0614a970805cd815d0e9a8a6525
 +await main();
 diff --git a/dist/scroll-resistance-trainer.zip b/dist/scroll-resistance-trainer.zip
 new file mode 100644
-index 0000000000000000000000000000000000000000..3a359ca3258c77ec3ced216fb26b45112328f9be
+index 0000000000000000000000000000000000000000..25e23a30c4dc8cd8511ec46f6fb871b9959d8eb1
 GIT binary patch
-literal 8960
-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
-JF6Cd}{vXg~w_N}L
+literal 8583
+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
 
 literal 0
 HcmV?d00001
 
 diff --git a/dist/scroll-resistance-trainer/background.js b/dist/scroll-resistance-trainer/background.js
 new file mode 100644
-index 0000000000000000000000000000000000000000..0c44ead838408a4c3fa4f269666d4aef36c1132c
+index 0000000000000000000000000000000000000000..c3f749fbc82ca5e83f3553cda55719634898195e
 --- /dev/null
 +++ b/dist/scroll-resistance-trainer/background.js
-@@ -0,0 +1,75 @@
+@@ -0,0 +1,66 @@
 +const DEFAULT_SETTINGS = {
 +  mode: 'whitelist',
 +  whitelist: [],
 +  blacklist: [],
 +  resistance: {
-+    baseMultiplier: 1.5,
-+    incrementPerScroll: 0.2,
-+    maxMultiplier: 20,
-+    recoveryPerSecond: 1,
-+    distanceWeight: 120
++    baseMultiplier: 1,
++    maxMultiplier: 12,
++    metersToMax: 8
 +  }
 +};
 +
@@ -278,28 +268,21 @@ index 0000000000000000000000000000000000000000..0c44ead838408a4c3fa4f269666d4aef
 +    }
 +
 +    const storedResistance = items.resistance || {};
-+    const mergedResistance = {
-+      baseMultiplier:
-+        Number.isFinite(storedResistance.baseMultiplier) && storedResistance.baseMultiplier > 0
-+          ? storedResistance.baseMultiplier
-+          : DEFAULT_SETTINGS.resistance.baseMultiplier,
-+      incrementPerScroll:
-+        Number.isFinite(storedResistance.incrementPerScroll) && storedResistance.incrementPerScroll >= 0
-+          ? storedResistance.incrementPerScroll
-+          : DEFAULT_SETTINGS.resistance.incrementPerScroll,
-+      maxMultiplier:
-+        Number.isFinite(storedResistance.maxMultiplier) && storedResistance.maxMultiplier >= 1
-+          ? storedResistance.maxMultiplier
-+          : DEFAULT_SETTINGS.resistance.maxMultiplier,
-+      recoveryPerSecond:
-+        Number.isFinite(storedResistance.recoveryPerSecond) && storedResistance.recoveryPerSecond >= 0
-+          ? storedResistance.recoveryPerSecond
-+          : DEFAULT_SETTINGS.resistance.recoveryPerSecond,
-+      distanceWeight:
-+        Number.isFinite(storedResistance.distanceWeight) && storedResistance.distanceWeight > 0
-+          ? storedResistance.distanceWeight
-+          : DEFAULT_SETTINGS.resistance.distanceWeight
-+    };
++    let baseMultiplier = Number.isFinite(storedResistance.baseMultiplier) && storedResistance.baseMultiplier >= 1
++      ? storedResistance.baseMultiplier
++      : DEFAULT_SETTINGS.resistance.baseMultiplier;
++    let maxMultiplier = Number.isFinite(storedResistance.maxMultiplier) && storedResistance.maxMultiplier >= 1
++      ? storedResistance.maxMultiplier
++      : DEFAULT_SETTINGS.resistance.maxMultiplier;
++    const metersToMax = Number.isFinite(storedResistance.metersToMax) && storedResistance.metersToMax > 0
++      ? storedResistance.metersToMax
++      : DEFAULT_SETTINGS.resistance.metersToMax;
++
++    if (maxMultiplier < baseMultiplier) {
++      maxMultiplier = baseMultiplier;
++    }
++
++    const mergedResistance = { baseMultiplier, maxMultiplier, metersToMax };
 +
 +    if (JSON.stringify(storedResistance) !== JSON.stringify(mergedResistance)) {
 +      updates.resistance = mergedResistance;
@@ -320,28 +303,25 @@ index 0000000000000000000000000000000000000000..0c44ead838408a4c3fa4f269666d4aef
 +});
 diff --git a/dist/scroll-resistance-trainer/content.js b/dist/scroll-resistance-trainer/content.js
 new file mode 100644
-index 0000000000000000000000000000000000000000..d263b077831d32474a1b39fb6927dc3335149489
+index 0000000000000000000000000000000000000000..8d6015fba2da521646948718b90292720895cb0c
 --- /dev/null
 +++ b/dist/scroll-resistance-trainer/content.js
-@@ -0,0 +1,183 @@
+@@ -0,0 +1,153 @@
++const PIXELS_PER_METER = 3779.5275590551;
++
 +const DEFAULT_SETTINGS = {
 +  mode: 'whitelist',
 +  whitelist: [],
 +  blacklist: [],
 +  resistance: {
-+    baseMultiplier: 1.5,
-+    incrementPerScroll: 0.2,
-+    maxMultiplier: 20,
-+    recoveryPerSecond: 1,
-+    distanceWeight: 120
++    baseMultiplier: 1,
++    maxMultiplier: 12,
++    metersToMax: 8
 +  }
 +};
 +
 +let settings = { ...DEFAULT_SETTINGS };
 +let enabled = false;
-+let multiplier = DEFAULT_SETTINGS.resistance.baseMultiplier;
-+let scrollUnits = 0;
-+let recoveryTimer = null;
 +
 +function cloneSettings(value) {
 +  return JSON.parse(JSON.stringify(value));
@@ -364,62 +344,46 @@ index 0000000000000000000000000000000000000000..d263b077831d32474a1b39fb6927dc33
 +}
 +
 +function sanitizeResistanceConfig(raw = {}) {
-+  const baseMultiplier = Number.isFinite(raw.baseMultiplier) && raw.baseMultiplier > 0
++  const baseMultiplier = Number.isFinite(raw.baseMultiplier) && raw.baseMultiplier >= 1
 +    ? raw.baseMultiplier
 +    : DEFAULT_SETTINGS.resistance.baseMultiplier;
-+  const incrementPerScroll = Number.isFinite(raw.incrementPerScroll) && raw.incrementPerScroll >= 0
-+    ? raw.incrementPerScroll
-+    : DEFAULT_SETTINGS.resistance.incrementPerScroll;
-+  const maxMultiplier = Number.isFinite(raw.maxMultiplier) && raw.maxMultiplier >= 1
++  let maxMultiplier = Number.isFinite(raw.maxMultiplier) && raw.maxMultiplier >= 1
 +    ? raw.maxMultiplier
 +    : DEFAULT_SETTINGS.resistance.maxMultiplier;
-+  const recoveryPerSecond = Number.isFinite(raw.recoveryPerSecond) && raw.recoveryPerSecond >= 0
-+    ? raw.recoveryPerSecond
-+    : DEFAULT_SETTINGS.resistance.recoveryPerSecond;
-+  const distanceWeight = Number.isFinite(raw.distanceWeight) && raw.distanceWeight > 0
-+    ? raw.distanceWeight
-+    : DEFAULT_SETTINGS.resistance.distanceWeight;
++  const metersToMax = Number.isFinite(raw.metersToMax) && raw.metersToMax > 0
++    ? raw.metersToMax
++    : DEFAULT_SETTINGS.resistance.metersToMax;
 +
-+  return { baseMultiplier, incrementPerScroll, maxMultiplier, recoveryPerSecond, distanceWeight };
-+}
-+
-+function updateMultiplier() {
-+  const { baseMultiplier, incrementPerScroll, maxMultiplier } = settings.resistance;
-+  multiplier = Math.min(maxMultiplier, baseMultiplier + scrollUnits * incrementPerScroll);
-+}
-+
-+function scheduleRecovery() {
-+  if (recoveryTimer) {
-+    return;
++  if (maxMultiplier < baseMultiplier) {
++    maxMultiplier = baseMultiplier;
 +  }
 +
-+  const intervalMs = 1000;
-+  recoveryTimer = setInterval(() => {
-+    if (!enabled) {
-+      scrollUnits = 0;
-+      updateMultiplier();
-+      clearInterval(recoveryTimer);
-+      recoveryTimer = null;
-+      return;
-+    }
-+
-+    if (scrollUnits <= 0) {
-+      scrollUnits = 0;
-+      updateMultiplier();
-+      return;
-+    }
-+
-+    const { recoveryPerSecond } = settings.resistance;
-+    scrollUnits = Math.max(0, scrollUnits - recoveryPerSecond);
-+    updateMultiplier();
-+  }, intervalMs);
++  return { baseMultiplier, maxMultiplier, metersToMax };
 +}
 +
-+function stopRecovery() {
-+  if (recoveryTimer) {
-+    clearInterval(recoveryTimer);
-+    recoveryTimer = null;
++function getScrollTop() {
++  if (typeof window.scrollY === 'number') {
++    return window.scrollY;
 +  }
++
++  const doc = document.documentElement;
++  const body = document.body;
++  return Math.max(doc ? doc.scrollTop : 0, body ? body.scrollTop : 0);
++}
++
++function getDownwardMultiplier(scrollTop) {
++  const { baseMultiplier, maxMultiplier, metersToMax } = settings.resistance;
++  const pixelsToMax = metersToMax * PIXELS_PER_METER;
++
++  if (pixelsToMax <= 0) {
++    return Math.max(1, maxMultiplier);
++  }
++
++  const progress = Math.min(1, Math.max(0, scrollTop / pixelsToMax));
++  const range = Math.max(0, maxMultiplier - baseMultiplier);
++  const multiplier = baseMultiplier + progress * range;
++
++  return Math.max(1, Math.min(maxMultiplier, multiplier));
 +}
 +
 +function applySettings(newSettings) {
@@ -435,14 +399,6 @@ index 0000000000000000000000000000000000000000..d263b077831d32474a1b39fb6927dc33
 +  };
 +
 +  enabled = determineEnabled();
-+  scrollUnits = 0;
-+  updateMultiplier();
-+
-+  if (enabled) {
-+    scheduleRecovery();
-+  } else {
-+    stopRecovery();
-+  }
 +}
 +
 +function handleWheel(event) {
@@ -454,19 +410,16 @@ index 0000000000000000000000000000000000000000..d263b077831d32474a1b39fb6927dc33
 +    return;
 +  }
 +
-+  const deltaX = event.deltaX / multiplier;
-+  const deltaY = event.deltaY / multiplier;
++  const scrollTop = getScrollTop();
++  const downwardMultiplier = getDownwardMultiplier(scrollTop);
++  const isScrollingDown = event.deltaY > 0;
++  const effectiveVerticalMultiplier = isScrollingDown ? downwardMultiplier : 1;
++
++  const adjustedDeltaX = event.deltaX;
++  const adjustedDeltaY = event.deltaY / effectiveVerticalMultiplier;
 +
 +  event.preventDefault();
-+  window.scrollBy({ left: deltaX, top: deltaY, behavior: 'auto' });
-+
-+  const distance = Math.max(Math.abs(event.deltaX), Math.abs(event.deltaY));
-+  const { distanceWeight } = settings.resistance;
-+  const weight = distanceWeight > 0 ? distanceWeight : 1;
-+  const gain = distance > 0 ? Math.max(1, distance / weight) : 1;
-+  scrollUnits += gain;
-+  updateMultiplier();
-+  scheduleRecovery();
++  window.scrollBy({ left: adjustedDeltaX, top: adjustedDeltaY, behavior: 'auto' });
 +}
 +
 +function init() {
@@ -676,10 +629,10 @@ index 0000000000000000000000000000000000000000..73ec360f43b5384d955ae0f1ac14025c
 +}
 diff --git a/dist/scroll-resistance-trainer/options.html b/dist/scroll-resistance-trainer/options.html
 new file mode 100644
-index 0000000000000000000000000000000000000000..f49bbe582c459ac2429921a14eaf9ed7e75aa320
+index 0000000000000000000000000000000000000000..80edb0a82c593d2858752c6b7ab2d4c112723b37
 --- /dev/null
 +++ b/dist/scroll-resistance-trainer/options.html
-@@ -0,0 +1,74 @@
+@@ -0,0 +1,66 @@
 +<!DOCTYPE html>
 +<html lang="en">
 +  <head>
@@ -724,24 +677,16 @@ index 0000000000000000000000000000000000000000..f49bbe582c459ac2429921a14eaf9ed7
 +        <h2>Resistance settings</h2>
 +        <div class="resistance-grid">
 +          <label>
-+            Base multiplier
++            Starting resistance multiplier
 +            <input type="number" id="base-multiplier" step="0.1" min="1" />
 +          </label>
 +          <label>
-+            Increment per scroll
-+            <input type="number" id="increment-per-scroll" step="0.05" min="0" />
-+          </label>
-+          <label>
-+            Maximum multiplier
++            Maximum resistance multiplier
 +            <input type="number" id="max-multiplier" step="0.5" min="1" />
 +          </label>
 +          <label>
-+            Recovery per second
-+            <input type="number" id="recovery-per-second" step="0.1" min="0" />
-+          </label>
-+          <label>
-+            Distance weight (pixels per resistance unit)
-+            <input type="number" id="distance-weight" step="10" min="1" />
++            Distance to max resistance (meters)
++            <input type="number" id="meters-to-max" step="0.5" min="0.1" />
 +          </label>
 +        </div>
 +        <div class="resistance-actions">
@@ -756,20 +701,18 @@ index 0000000000000000000000000000000000000000..f49bbe582c459ac2429921a14eaf9ed7
 +</html>
 diff --git a/dist/scroll-resistance-trainer/options.js b/dist/scroll-resistance-trainer/options.js
 new file mode 100644
-index 0000000000000000000000000000000000000000..02779a9edd50f2ed5e771e1e16d4b140177f4171
+index 0000000000000000000000000000000000000000..56c827794131207a668f61eaaf07e439cc983730
 --- /dev/null
 +++ b/dist/scroll-resistance-trainer/options.js
-@@ -0,0 +1,217 @@
+@@ -0,0 +1,204 @@
 +const DEFAULT_SETTINGS = {
 +  mode: 'whitelist',
 +  whitelist: [],
 +  blacklist: [],
 +  resistance: {
-+    baseMultiplier: 1.5,
-+    incrementPerScroll: 0.2,
-+    maxMultiplier: 20,
-+    recoveryPerSecond: 1,
-+    distanceWeight: 120
++    baseMultiplier: 1,
++    maxMultiplier: 12,
++    metersToMax: 8
 +  }
 +};
 +
@@ -781,10 +724,8 @@ index 0000000000000000000000000000000000000000..02779a9edd50f2ed5e771e1e16d4b140
 +const blacklistInput = document.getElementById('blacklist-input');
 +const blacklistList = document.getElementById('blacklist-list');
 +const baseMultiplierInput = document.getElementById('base-multiplier');
-+const incrementPerScrollInput = document.getElementById('increment-per-scroll');
 +const maxMultiplierInput = document.getElementById('max-multiplier');
-+const recoveryPerSecondInput = document.getElementById('recovery-per-second');
-+const distanceWeightInput = document.getElementById('distance-weight');
++const metersToMaxInput = document.getElementById('meters-to-max');
 +const saveResistanceButton = document.getElementById('save-resistance');
 +const resetResistanceButton = document.getElementById('reset-resistance');
 +const resistanceStatus = document.getElementById('resistance-status');
@@ -848,13 +789,10 @@ index 0000000000000000000000000000000000000000..02779a9edd50f2ed5e771e1e16d4b140
 +}
 +
 +function renderResistance() {
-+  const { baseMultiplier, incrementPerScroll, maxMultiplier, recoveryPerSecond, distanceWeight } =
-+    currentSettings.resistance;
++  const { baseMultiplier, maxMultiplier, metersToMax } = currentSettings.resistance;
 +  baseMultiplierInput.value = baseMultiplier;
-+  incrementPerScrollInput.value = incrementPerScroll;
 +  maxMultiplierInput.value = maxMultiplier;
-+  recoveryPerSecondInput.value = recoveryPerSecond;
-+  distanceWeightInput.value = distanceWeight;
++  metersToMaxInput.value = metersToMax;
 +}
 +
 +function saveSettings(partial) {
@@ -904,23 +842,19 @@ index 0000000000000000000000000000000000000000..02779a9edd50f2ed5e771e1e16d4b140
 +
 +function handleSaveResistance() {
 +  const base = Number.parseFloat(baseMultiplierInput.value);
-+  const increment = Number.parseFloat(incrementPerScrollInput.value);
 +  const max = Number.parseFloat(maxMultiplierInput.value);
-+  const recovery = Number.parseFloat(recoveryPerSecondInput.value);
-+  const distanceWeight = Number.parseFloat(distanceWeightInput.value);
++  const metersToMax = Number.parseFloat(metersToMaxInput.value);
 +
 +  const resistance = {
-+    baseMultiplier: Number.isFinite(base) && base > 0 ? base : DEFAULT_SETTINGS.resistance.baseMultiplier,
-+    incrementPerScroll:
-+      Number.isFinite(increment) && increment >= 0 ? increment : DEFAULT_SETTINGS.resistance.incrementPerScroll,
++    baseMultiplier: Number.isFinite(base) && base >= 1 ? base : DEFAULT_SETTINGS.resistance.baseMultiplier,
 +    maxMultiplier: Number.isFinite(max) && max >= 1 ? max : DEFAULT_SETTINGS.resistance.maxMultiplier,
-+    recoveryPerSecond:
-+      Number.isFinite(recovery) && recovery >= 0 ? recovery : DEFAULT_SETTINGS.resistance.recoveryPerSecond,
-+    distanceWeight:
-+      Number.isFinite(distanceWeight) && distanceWeight > 0
-+        ? distanceWeight
-+        : DEFAULT_SETTINGS.resistance.distanceWeight
++    metersToMax:
++      Number.isFinite(metersToMax) && metersToMax > 0 ? metersToMax : DEFAULT_SETTINGS.resistance.metersToMax
 +  };
++
++  if (resistance.maxMultiplier < resistance.baseMultiplier) {
++    resistance.maxMultiplier = resistance.baseMultiplier;
++  }
 +
 +  currentSettings.resistance = resistance;
 +  saveSettings({ resistance });
@@ -953,10 +887,8 @@ index 0000000000000000000000000000000000000000..02779a9edd50f2ed5e771e1e16d4b140
 +      blacklist: Array.isArray(items.blacklist) ? items.blacklist.slice() : cloneDefaults(DEFAULT_SETTINGS.blacklist),
 +      resistance: {
 +        baseMultiplier: items.resistance?.baseMultiplier ?? DEFAULT_SETTINGS.resistance.baseMultiplier,
-+        incrementPerScroll: items.resistance?.incrementPerScroll ?? DEFAULT_SETTINGS.resistance.incrementPerScroll,
 +        maxMultiplier: items.resistance?.maxMultiplier ?? DEFAULT_SETTINGS.resistance.maxMultiplier,
-+        recoveryPerSecond: items.resistance?.recoveryPerSecond ?? DEFAULT_SETTINGS.resistance.recoveryPerSecond,
-+        distanceWeight: items.resistance?.distanceWeight ?? DEFAULT_SETTINGS.resistance.distanceWeight
++        metersToMax: items.resistance?.metersToMax ?? DEFAULT_SETTINGS.resistance.metersToMax
 +      }
 +    };
 +
@@ -1088,20 +1020,18 @@ index 0000000000000000000000000000000000000000..104552a8bbe4a1f22572e41a7dd03387
 +</html>
 diff --git a/dist/scroll-resistance-trainer/popup.js b/dist/scroll-resistance-trainer/popup.js
 new file mode 100644
-index 0000000000000000000000000000000000000000..668abffb21de4aefeb6f4f41f2887857b4714c42
+index 0000000000000000000000000000000000000000..460859f3eac4b0b13f4fc19d28ed113419ed2f3c
 --- /dev/null
 +++ b/dist/scroll-resistance-trainer/popup.js
-@@ -0,0 +1,137 @@
+@@ -0,0 +1,135 @@
 +const DEFAULT_SETTINGS = {
 +  mode: 'whitelist',
 +  whitelist: [],
 +  blacklist: [],
 +  resistance: {
-+    baseMultiplier: 1.5,
-+    incrementPerScroll: 0.2,
-+    maxMultiplier: 20,
-+    recoveryPerSecond: 1,
-+    distanceWeight: 120
++    baseMultiplier: 1,
++    maxMultiplier: 12,
++    metersToMax: 8
 +  }
 +};
 +
@@ -1231,20 +1161,18 @@ index 0000000000000000000000000000000000000000..668abffb21de4aefeb6f4f41f2887857
 +document.addEventListener('DOMContentLoaded', init);
 diff --git a/extension/background.js b/extension/background.js
 new file mode 100644
-index 0000000000000000000000000000000000000000..0c44ead838408a4c3fa4f269666d4aef36c1132c
+index 0000000000000000000000000000000000000000..c3f749fbc82ca5e83f3553cda55719634898195e
 --- /dev/null
 +++ b/extension/background.js
-@@ -0,0 +1,75 @@
+@@ -0,0 +1,66 @@
 +const DEFAULT_SETTINGS = {
 +  mode: 'whitelist',
 +  whitelist: [],
 +  blacklist: [],
 +  resistance: {
-+    baseMultiplier: 1.5,
-+    incrementPerScroll: 0.2,
-+    maxMultiplier: 20,
-+    recoveryPerSecond: 1,
-+    distanceWeight: 120
++    baseMultiplier: 1,
++    maxMultiplier: 12,
++    metersToMax: 8
 +  }
 +};
 +
@@ -1270,28 +1198,21 @@ index 0000000000000000000000000000000000000000..0c44ead838408a4c3fa4f269666d4aef
 +    }
 +
 +    const storedResistance = items.resistance || {};
-+    const mergedResistance = {
-+      baseMultiplier:
-+        Number.isFinite(storedResistance.baseMultiplier) && storedResistance.baseMultiplier > 0
-+          ? storedResistance.baseMultiplier
-+          : DEFAULT_SETTINGS.resistance.baseMultiplier,
-+      incrementPerScroll:
-+        Number.isFinite(storedResistance.incrementPerScroll) && storedResistance.incrementPerScroll >= 0
-+          ? storedResistance.incrementPerScroll
-+          : DEFAULT_SETTINGS.resistance.incrementPerScroll,
-+      maxMultiplier:
-+        Number.isFinite(storedResistance.maxMultiplier) && storedResistance.maxMultiplier >= 1
-+          ? storedResistance.maxMultiplier
-+          : DEFAULT_SETTINGS.resistance.maxMultiplier,
-+      recoveryPerSecond:
-+        Number.isFinite(storedResistance.recoveryPerSecond) && storedResistance.recoveryPerSecond >= 0
-+          ? storedResistance.recoveryPerSecond
-+          : DEFAULT_SETTINGS.resistance.recoveryPerSecond,
-+      distanceWeight:
-+        Number.isFinite(storedResistance.distanceWeight) && storedResistance.distanceWeight > 0
-+          ? storedResistance.distanceWeight
-+          : DEFAULT_SETTINGS.resistance.distanceWeight
-+    };
++    let baseMultiplier = Number.isFinite(storedResistance.baseMultiplier) && storedResistance.baseMultiplier >= 1
++      ? storedResistance.baseMultiplier
++      : DEFAULT_SETTINGS.resistance.baseMultiplier;
++    let maxMultiplier = Number.isFinite(storedResistance.maxMultiplier) && storedResistance.maxMultiplier >= 1
++      ? storedResistance.maxMultiplier
++      : DEFAULT_SETTINGS.resistance.maxMultiplier;
++    const metersToMax = Number.isFinite(storedResistance.metersToMax) && storedResistance.metersToMax > 0
++      ? storedResistance.metersToMax
++      : DEFAULT_SETTINGS.resistance.metersToMax;
++
++    if (maxMultiplier < baseMultiplier) {
++      maxMultiplier = baseMultiplier;
++    }
++
++    const mergedResistance = { baseMultiplier, maxMultiplier, metersToMax };
 +
 +    if (JSON.stringify(storedResistance) !== JSON.stringify(mergedResistance)) {
 +      updates.resistance = mergedResistance;
@@ -1312,28 +1233,25 @@ index 0000000000000000000000000000000000000000..0c44ead838408a4c3fa4f269666d4aef
 +});
 diff --git a/extension/content.js b/extension/content.js
 new file mode 100644
-index 0000000000000000000000000000000000000000..d263b077831d32474a1b39fb6927dc3335149489
+index 0000000000000000000000000000000000000000..8d6015fba2da521646948718b90292720895cb0c
 --- /dev/null
 +++ b/extension/content.js
-@@ -0,0 +1,183 @@
+@@ -0,0 +1,153 @@
++const PIXELS_PER_METER = 3779.5275590551;
++
 +const DEFAULT_SETTINGS = {
 +  mode: 'whitelist',
 +  whitelist: [],
 +  blacklist: [],
 +  resistance: {
-+    baseMultiplier: 1.5,
-+    incrementPerScroll: 0.2,
-+    maxMultiplier: 20,
-+    recoveryPerSecond: 1,
-+    distanceWeight: 120
++    baseMultiplier: 1,
++    maxMultiplier: 12,
++    metersToMax: 8
 +  }
 +};
 +
 +let settings = { ...DEFAULT_SETTINGS };
 +let enabled = false;
-+let multiplier = DEFAULT_SETTINGS.resistance.baseMultiplier;
-+let scrollUnits = 0;
-+let recoveryTimer = null;
 +
 +function cloneSettings(value) {
 +  return JSON.parse(JSON.stringify(value));
@@ -1356,62 +1274,46 @@ index 0000000000000000000000000000000000000000..d263b077831d32474a1b39fb6927dc33
 +}
 +
 +function sanitizeResistanceConfig(raw = {}) {
-+  const baseMultiplier = Number.isFinite(raw.baseMultiplier) && raw.baseMultiplier > 0
++  const baseMultiplier = Number.isFinite(raw.baseMultiplier) && raw.baseMultiplier >= 1
 +    ? raw.baseMultiplier
 +    : DEFAULT_SETTINGS.resistance.baseMultiplier;
-+  const incrementPerScroll = Number.isFinite(raw.incrementPerScroll) && raw.incrementPerScroll >= 0
-+    ? raw.incrementPerScroll
-+    : DEFAULT_SETTINGS.resistance.incrementPerScroll;
-+  const maxMultiplier = Number.isFinite(raw.maxMultiplier) && raw.maxMultiplier >= 1
++  let maxMultiplier = Number.isFinite(raw.maxMultiplier) && raw.maxMultiplier >= 1
 +    ? raw.maxMultiplier
 +    : DEFAULT_SETTINGS.resistance.maxMultiplier;
-+  const recoveryPerSecond = Number.isFinite(raw.recoveryPerSecond) && raw.recoveryPerSecond >= 0
-+    ? raw.recoveryPerSecond
-+    : DEFAULT_SETTINGS.resistance.recoveryPerSecond;
-+  const distanceWeight = Number.isFinite(raw.distanceWeight) && raw.distanceWeight > 0
-+    ? raw.distanceWeight
-+    : DEFAULT_SETTINGS.resistance.distanceWeight;
++  const metersToMax = Number.isFinite(raw.metersToMax) && raw.metersToMax > 0
++    ? raw.metersToMax
++    : DEFAULT_SETTINGS.resistance.metersToMax;
 +
-+  return { baseMultiplier, incrementPerScroll, maxMultiplier, recoveryPerSecond, distanceWeight };
-+}
-+
-+function updateMultiplier() {
-+  const { baseMultiplier, incrementPerScroll, maxMultiplier } = settings.resistance;
-+  multiplier = Math.min(maxMultiplier, baseMultiplier + scrollUnits * incrementPerScroll);
-+}
-+
-+function scheduleRecovery() {
-+  if (recoveryTimer) {
-+    return;
++  if (maxMultiplier < baseMultiplier) {
++    maxMultiplier = baseMultiplier;
 +  }
 +
-+  const intervalMs = 1000;
-+  recoveryTimer = setInterval(() => {
-+    if (!enabled) {
-+      scrollUnits = 0;
-+      updateMultiplier();
-+      clearInterval(recoveryTimer);
-+      recoveryTimer = null;
-+      return;
-+    }
-+
-+    if (scrollUnits <= 0) {
-+      scrollUnits = 0;
-+      updateMultiplier();
-+      return;
-+    }
-+
-+    const { recoveryPerSecond } = settings.resistance;
-+    scrollUnits = Math.max(0, scrollUnits - recoveryPerSecond);
-+    updateMultiplier();
-+  }, intervalMs);
++  return { baseMultiplier, maxMultiplier, metersToMax };
 +}
 +
-+function stopRecovery() {
-+  if (recoveryTimer) {
-+    clearInterval(recoveryTimer);
-+    recoveryTimer = null;
++function getScrollTop() {
++  if (typeof window.scrollY === 'number') {
++    return window.scrollY;
 +  }
++
++  const doc = document.documentElement;
++  const body = document.body;
++  return Math.max(doc ? doc.scrollTop : 0, body ? body.scrollTop : 0);
++}
++
++function getDownwardMultiplier(scrollTop) {
++  const { baseMultiplier, maxMultiplier, metersToMax } = settings.resistance;
++  const pixelsToMax = metersToMax * PIXELS_PER_METER;
++
++  if (pixelsToMax <= 0) {
++    return Math.max(1, maxMultiplier);
++  }
++
++  const progress = Math.min(1, Math.max(0, scrollTop / pixelsToMax));
++  const range = Math.max(0, maxMultiplier - baseMultiplier);
++  const multiplier = baseMultiplier + progress * range;
++
++  return Math.max(1, Math.min(maxMultiplier, multiplier));
 +}
 +
 +function applySettings(newSettings) {
@@ -1427,14 +1329,6 @@ index 0000000000000000000000000000000000000000..d263b077831d32474a1b39fb6927dc33
 +  };
 +
 +  enabled = determineEnabled();
-+  scrollUnits = 0;
-+  updateMultiplier();
-+
-+  if (enabled) {
-+    scheduleRecovery();
-+  } else {
-+    stopRecovery();
-+  }
 +}
 +
 +function handleWheel(event) {
@@ -1446,19 +1340,16 @@ index 0000000000000000000000000000000000000000..d263b077831d32474a1b39fb6927dc33
 +    return;
 +  }
 +
-+  const deltaX = event.deltaX / multiplier;
-+  const deltaY = event.deltaY / multiplier;
++  const scrollTop = getScrollTop();
++  const downwardMultiplier = getDownwardMultiplier(scrollTop);
++  const isScrollingDown = event.deltaY > 0;
++  const effectiveVerticalMultiplier = isScrollingDown ? downwardMultiplier : 1;
++
++  const adjustedDeltaX = event.deltaX;
++  const adjustedDeltaY = event.deltaY / effectiveVerticalMultiplier;
 +
 +  event.preventDefault();
-+  window.scrollBy({ left: deltaX, top: deltaY, behavior: 'auto' });
-+
-+  const distance = Math.max(Math.abs(event.deltaX), Math.abs(event.deltaY));
-+  const { distanceWeight } = settings.resistance;
-+  const weight = distanceWeight > 0 ? distanceWeight : 1;
-+  const gain = distance > 0 ? Math.max(1, distance / weight) : 1;
-+  scrollUnits += gain;
-+  updateMultiplier();
-+  scheduleRecovery();
++  window.scrollBy({ left: adjustedDeltaX, top: adjustedDeltaY, behavior: 'auto' });
 +}
 +
 +function init() {
@@ -1668,10 +1559,10 @@ index 0000000000000000000000000000000000000000..73ec360f43b5384d955ae0f1ac14025c
 +}
 diff --git a/extension/options.html b/extension/options.html
 new file mode 100644
-index 0000000000000000000000000000000000000000..f49bbe582c459ac2429921a14eaf9ed7e75aa320
+index 0000000000000000000000000000000000000000..80edb0a82c593d2858752c6b7ab2d4c112723b37
 --- /dev/null
 +++ b/extension/options.html
-@@ -0,0 +1,74 @@
+@@ -0,0 +1,66 @@
 +<!DOCTYPE html>
 +<html lang="en">
 +  <head>
@@ -1716,24 +1607,16 @@ index 0000000000000000000000000000000000000000..f49bbe582c459ac2429921a14eaf9ed7
 +        <h2>Resistance settings</h2>
 +        <div class="resistance-grid">
 +          <label>
-+            Base multiplier
++            Starting resistance multiplier
 +            <input type="number" id="base-multiplier" step="0.1" min="1" />
 +          </label>
 +          <label>
-+            Increment per scroll
-+            <input type="number" id="increment-per-scroll" step="0.05" min="0" />
-+          </label>
-+          <label>
-+            Maximum multiplier
++            Maximum resistance multiplier
 +            <input type="number" id="max-multiplier" step="0.5" min="1" />
 +          </label>
 +          <label>
-+            Recovery per second
-+            <input type="number" id="recovery-per-second" step="0.1" min="0" />
-+          </label>
-+          <label>
-+            Distance weight (pixels per resistance unit)
-+            <input type="number" id="distance-weight" step="10" min="1" />
++            Distance to max resistance (meters)
++            <input type="number" id="meters-to-max" step="0.5" min="0.1" />
 +          </label>
 +        </div>
 +        <div class="resistance-actions">
@@ -1748,20 +1631,18 @@ index 0000000000000000000000000000000000000000..f49bbe582c459ac2429921a14eaf9ed7
 +</html>
 diff --git a/extension/options.js b/extension/options.js
 new file mode 100644
-index 0000000000000000000000000000000000000000..02779a9edd50f2ed5e771e1e16d4b140177f4171
+index 0000000000000000000000000000000000000000..56c827794131207a668f61eaaf07e439cc983730
 --- /dev/null
 +++ b/extension/options.js
-@@ -0,0 +1,217 @@
+@@ -0,0 +1,204 @@
 +const DEFAULT_SETTINGS = {
 +  mode: 'whitelist',
 +  whitelist: [],
 +  blacklist: [],
 +  resistance: {
-+    baseMultiplier: 1.5,
-+    incrementPerScroll: 0.2,
-+    maxMultiplier: 20,
-+    recoveryPerSecond: 1,
-+    distanceWeight: 120
++    baseMultiplier: 1,
++    maxMultiplier: 12,
++    metersToMax: 8
 +  }
 +};
 +
@@ -1773,10 +1654,8 @@ index 0000000000000000000000000000000000000000..02779a9edd50f2ed5e771e1e16d4b140
 +const blacklistInput = document.getElementById('blacklist-input');
 +const blacklistList = document.getElementById('blacklist-list');
 +const baseMultiplierInput = document.getElementById('base-multiplier');
-+const incrementPerScrollInput = document.getElementById('increment-per-scroll');
 +const maxMultiplierInput = document.getElementById('max-multiplier');
-+const recoveryPerSecondInput = document.getElementById('recovery-per-second');
-+const distanceWeightInput = document.getElementById('distance-weight');
++const metersToMaxInput = document.getElementById('meters-to-max');
 +const saveResistanceButton = document.getElementById('save-resistance');
 +const resetResistanceButton = document.getElementById('reset-resistance');
 +const resistanceStatus = document.getElementById('resistance-status');
@@ -1840,13 +1719,10 @@ index 0000000000000000000000000000000000000000..02779a9edd50f2ed5e771e1e16d4b140
 +}
 +
 +function renderResistance() {
-+  const { baseMultiplier, incrementPerScroll, maxMultiplier, recoveryPerSecond, distanceWeight } =
-+    currentSettings.resistance;
++  const { baseMultiplier, maxMultiplier, metersToMax } = currentSettings.resistance;
 +  baseMultiplierInput.value = baseMultiplier;
-+  incrementPerScrollInput.value = incrementPerScroll;
 +  maxMultiplierInput.value = maxMultiplier;
-+  recoveryPerSecondInput.value = recoveryPerSecond;
-+  distanceWeightInput.value = distanceWeight;
++  metersToMaxInput.value = metersToMax;
 +}
 +
 +function saveSettings(partial) {
@@ -1896,23 +1772,19 @@ index 0000000000000000000000000000000000000000..02779a9edd50f2ed5e771e1e16d4b140
 +
 +function handleSaveResistance() {
 +  const base = Number.parseFloat(baseMultiplierInput.value);
-+  const increment = Number.parseFloat(incrementPerScrollInput.value);
 +  const max = Number.parseFloat(maxMultiplierInput.value);
-+  const recovery = Number.parseFloat(recoveryPerSecondInput.value);
-+  const distanceWeight = Number.parseFloat(distanceWeightInput.value);
++  const metersToMax = Number.parseFloat(metersToMaxInput.value);
 +
 +  const resistance = {
-+    baseMultiplier: Number.isFinite(base) && base > 0 ? base : DEFAULT_SETTINGS.resistance.baseMultiplier,
-+    incrementPerScroll:
-+      Number.isFinite(increment) && increment >= 0 ? increment : DEFAULT_SETTINGS.resistance.incrementPerScroll,
++    baseMultiplier: Number.isFinite(base) && base >= 1 ? base : DEFAULT_SETTINGS.resistance.baseMultiplier,
 +    maxMultiplier: Number.isFinite(max) && max >= 1 ? max : DEFAULT_SETTINGS.resistance.maxMultiplier,
-+    recoveryPerSecond:
-+      Number.isFinite(recovery) && recovery >= 0 ? recovery : DEFAULT_SETTINGS.resistance.recoveryPerSecond,
-+    distanceWeight:
-+      Number.isFinite(distanceWeight) && distanceWeight > 0
-+        ? distanceWeight
-+        : DEFAULT_SETTINGS.resistance.distanceWeight
++    metersToMax:
++      Number.isFinite(metersToMax) && metersToMax > 0 ? metersToMax : DEFAULT_SETTINGS.resistance.metersToMax
 +  };
++
++  if (resistance.maxMultiplier < resistance.baseMultiplier) {
++    resistance.maxMultiplier = resistance.baseMultiplier;
++  }
 +
 +  currentSettings.resistance = resistance;
 +  saveSettings({ resistance });
@@ -1945,10 +1817,8 @@ index 0000000000000000000000000000000000000000..02779a9edd50f2ed5e771e1e16d4b140
 +      blacklist: Array.isArray(items.blacklist) ? items.blacklist.slice() : cloneDefaults(DEFAULT_SETTINGS.blacklist),
 +      resistance: {
 +        baseMultiplier: items.resistance?.baseMultiplier ?? DEFAULT_SETTINGS.resistance.baseMultiplier,
-+        incrementPerScroll: items.resistance?.incrementPerScroll ?? DEFAULT_SETTINGS.resistance.incrementPerScroll,
 +        maxMultiplier: items.resistance?.maxMultiplier ?? DEFAULT_SETTINGS.resistance.maxMultiplier,
-+        recoveryPerSecond: items.resistance?.recoveryPerSecond ?? DEFAULT_SETTINGS.resistance.recoveryPerSecond,
-+        distanceWeight: items.resistance?.distanceWeight ?? DEFAULT_SETTINGS.resistance.distanceWeight
++        metersToMax: items.resistance?.metersToMax ?? DEFAULT_SETTINGS.resistance.metersToMax
 +      }
 +    };
 +
@@ -2080,20 +1950,18 @@ index 0000000000000000000000000000000000000000..104552a8bbe4a1f22572e41a7dd03387
 +</html>
 diff --git a/extension/popup.js b/extension/popup.js
 new file mode 100644
-index 0000000000000000000000000000000000000000..668abffb21de4aefeb6f4f41f2887857b4714c42
+index 0000000000000000000000000000000000000000..460859f3eac4b0b13f4fc19d28ed113419ed2f3c
 --- /dev/null
 +++ b/extension/popup.js
-@@ -0,0 +1,137 @@
+@@ -0,0 +1,135 @@
 +const DEFAULT_SETTINGS = {
 +  mode: 'whitelist',
 +  whitelist: [],
 +  blacklist: [],
 +  resistance: {
-+    baseMultiplier: 1.5,
-+    incrementPerScroll: 0.2,
-+    maxMultiplier: 20,
-+    recoveryPerSecond: 1,
-+    distanceWeight: 120
++    baseMultiplier: 1,
++    maxMultiplier: 12,
++    metersToMax: 8
 +  }
 +};
 +

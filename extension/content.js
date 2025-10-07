@@ -1,21 +1,18 @@
+const PIXELS_PER_METER = 3779.5275590551;
+
 const DEFAULT_SETTINGS = {
   mode: 'whitelist',
   whitelist: [],
   blacklist: [],
   resistance: {
-    baseMultiplier: 1.5,
-    incrementPerScroll: 0.2,
-    maxMultiplier: 20,
-    recoveryPerSecond: 1,
-    distanceWeight: 120
+    baseMultiplier: 1,
+    maxMultiplier: 12,
+    metersToMax: 8
   }
 };
 
 let settings = { ...DEFAULT_SETTINGS };
 let enabled = false;
-let multiplier = DEFAULT_SETTINGS.resistance.baseMultiplier;
-let scrollUnits = 0;
-let recoveryTimer = null;
 
 function cloneSettings(value) {
   return JSON.parse(JSON.stringify(value));
@@ -38,62 +35,46 @@ function determineEnabled() {
 }
 
 function sanitizeResistanceConfig(raw = {}) {
-  const baseMultiplier = Number.isFinite(raw.baseMultiplier) && raw.baseMultiplier > 0
+  const baseMultiplier = Number.isFinite(raw.baseMultiplier) && raw.baseMultiplier >= 1
     ? raw.baseMultiplier
     : DEFAULT_SETTINGS.resistance.baseMultiplier;
-  const incrementPerScroll = Number.isFinite(raw.incrementPerScroll) && raw.incrementPerScroll >= 0
-    ? raw.incrementPerScroll
-    : DEFAULT_SETTINGS.resistance.incrementPerScroll;
-  const maxMultiplier = Number.isFinite(raw.maxMultiplier) && raw.maxMultiplier >= 1
+  let maxMultiplier = Number.isFinite(raw.maxMultiplier) && raw.maxMultiplier >= 1
     ? raw.maxMultiplier
     : DEFAULT_SETTINGS.resistance.maxMultiplier;
-  const recoveryPerSecond = Number.isFinite(raw.recoveryPerSecond) && raw.recoveryPerSecond >= 0
-    ? raw.recoveryPerSecond
-    : DEFAULT_SETTINGS.resistance.recoveryPerSecond;
-  const distanceWeight = Number.isFinite(raw.distanceWeight) && raw.distanceWeight > 0
-    ? raw.distanceWeight
-    : DEFAULT_SETTINGS.resistance.distanceWeight;
+  const metersToMax = Number.isFinite(raw.metersToMax) && raw.metersToMax > 0
+    ? raw.metersToMax
+    : DEFAULT_SETTINGS.resistance.metersToMax;
 
-  return { baseMultiplier, incrementPerScroll, maxMultiplier, recoveryPerSecond, distanceWeight };
-}
-
-function updateMultiplier() {
-  const { baseMultiplier, incrementPerScroll, maxMultiplier } = settings.resistance;
-  multiplier = Math.min(maxMultiplier, baseMultiplier + scrollUnits * incrementPerScroll);
-}
-
-function scheduleRecovery() {
-  if (recoveryTimer) {
-    return;
+  if (maxMultiplier < baseMultiplier) {
+    maxMultiplier = baseMultiplier;
   }
 
-  const intervalMs = 1000;
-  recoveryTimer = setInterval(() => {
-    if (!enabled) {
-      scrollUnits = 0;
-      updateMultiplier();
-      clearInterval(recoveryTimer);
-      recoveryTimer = null;
-      return;
-    }
-
-    if (scrollUnits <= 0) {
-      scrollUnits = 0;
-      updateMultiplier();
-      return;
-    }
-
-    const { recoveryPerSecond } = settings.resistance;
-    scrollUnits = Math.max(0, scrollUnits - recoveryPerSecond);
-    updateMultiplier();
-  }, intervalMs);
+  return { baseMultiplier, maxMultiplier, metersToMax };
 }
 
-function stopRecovery() {
-  if (recoveryTimer) {
-    clearInterval(recoveryTimer);
-    recoveryTimer = null;
+function getScrollTop() {
+  if (typeof window.scrollY === 'number') {
+    return window.scrollY;
   }
+
+  const doc = document.documentElement;
+  const body = document.body;
+  return Math.max(doc ? doc.scrollTop : 0, body ? body.scrollTop : 0);
+}
+
+function getDownwardMultiplier(scrollTop) {
+  const { baseMultiplier, maxMultiplier, metersToMax } = settings.resistance;
+  const pixelsToMax = metersToMax * PIXELS_PER_METER;
+
+  if (pixelsToMax <= 0) {
+    return Math.max(1, maxMultiplier);
+  }
+
+  const progress = Math.min(1, Math.max(0, scrollTop / pixelsToMax));
+  const range = Math.max(0, maxMultiplier - baseMultiplier);
+  const multiplier = baseMultiplier + progress * range;
+
+  return Math.max(1, Math.min(maxMultiplier, multiplier));
 }
 
 function applySettings(newSettings) {
@@ -109,14 +90,6 @@ function applySettings(newSettings) {
   };
 
   enabled = determineEnabled();
-  scrollUnits = 0;
-  updateMultiplier();
-
-  if (enabled) {
-    scheduleRecovery();
-  } else {
-    stopRecovery();
-  }
 }
 
 function handleWheel(event) {
@@ -128,19 +101,16 @@ function handleWheel(event) {
     return;
   }
 
-  const deltaX = event.deltaX / multiplier;
-  const deltaY = event.deltaY / multiplier;
+  const scrollTop = getScrollTop();
+  const downwardMultiplier = getDownwardMultiplier(scrollTop);
+  const isScrollingDown = event.deltaY > 0;
+  const effectiveVerticalMultiplier = isScrollingDown ? downwardMultiplier : 1;
+
+  const adjustedDeltaX = event.deltaX;
+  const adjustedDeltaY = event.deltaY / effectiveVerticalMultiplier;
 
   event.preventDefault();
-  window.scrollBy({ left: deltaX, top: deltaY, behavior: 'auto' });
-
-  const distance = Math.max(Math.abs(event.deltaX), Math.abs(event.deltaY));
-  const { distanceWeight } = settings.resistance;
-  const weight = distanceWeight > 0 ? distanceWeight : 1;
-  const gain = distance > 0 ? Math.max(1, distance / weight) : 1;
-  scrollUnits += gain;
-  updateMultiplier();
-  scheduleRecovery();
+  window.scrollBy({ left: adjustedDeltaX, top: adjustedDeltaY, behavior: 'auto' });
 }
 
 function init() {

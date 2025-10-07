@@ -3,11 +3,9 @@ const DEFAULT_SETTINGS = {
   whitelist: [],
   blacklist: [],
   resistance: {
-    baseMultiplier: 1.5,
-    incrementPerScroll: 0.2,
-    maxMultiplier: 20,
-    recoveryPerSecond: 1,
-    distanceWeight: 120
+    baseMultiplier: 1,
+    maxMultiplier: 12,
+    metersToMax: 8
   }
 };
 

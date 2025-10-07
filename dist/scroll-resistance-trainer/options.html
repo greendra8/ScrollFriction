@@ -42,24 +42,16 @@
         <h2>Resistance settings</h2>
         <div class="resistance-grid">
           <label>
-            Base multiplier
+            Starting resistance multiplier
             <input type="number" id="base-multiplier" step="0.1" min="1" />
           </label>
           <label>
-            Increment per scroll
-            <input type="number" id="increment-per-scroll" step="0.05" min="0" />
-          </label>
-          <label>
-            Maximum multiplier
+            Maximum resistance multiplier
             <input type="number" id="max-multiplier" step="0.5" min="1" />
           </label>
           <label>
-            Recovery per second
-            <input type="number" id="recovery-per-second" step="0.1" min="0" />
-          </label>
-          <label>
-            Distance weight (pixels per resistance unit)
-            <input type="number" id="distance-weight" step="10" min="1" />
+            Distance to max resistance (meters)
+            <input type="number" id="meters-to-max" step="0.5" min="0.1" />
           </label>
         </div>
         <div class="resistance-actions">

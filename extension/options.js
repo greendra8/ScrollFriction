@@ -3,11 +3,9 @@ const DEFAULT_SETTINGS = {
   whitelist: [],
   blacklist: [],
   resistance: {
-    baseMultiplier: 1.5,
-    incrementPerScroll: 0.2,
-    maxMultiplier: 20,
-    recoveryPerSecond: 1,
-    distanceWeight: 120
+    baseMultiplier: 1,
+    maxMultiplier: 12,
+    metersToMax: 8
   }
 };
 
@@ -19,10 +17,8 @@ const blacklistForm = document.getElementById('blacklist-form');
 const blacklistInput = document.getElementById('blacklist-input');
 const blacklistList = document.getElementById('blacklist-list');
 const baseMultiplierInput = document.getElementById('base-multiplier');
-const incrementPerScrollInput = document.getElementById('increment-per-scroll');
 const maxMultiplierInput = document.getElementById('max-multiplier');
-const recoveryPerSecondInput = document.getElementById('recovery-per-second');
-const distanceWeightInput = document.getElementById('distance-weight');
+const metersToMaxInput = document.getElementById('meters-to-max');
 const saveResistanceButton = document.getElementById('save-resistance');
 const resetResistanceButton = document.getElementById('reset-resistance');
 const resistanceStatus = document.getElementById('resistance-status');
@@ -86,13 +82,10 @@ function renderList(listElement, sites, type) {
 }
 
 function renderResistance() {
-  const { baseMultiplier, incrementPerScroll, maxMultiplier, recoveryPerSecond, distanceWeight } =
-    currentSettings.resistance;
+  const { baseMultiplier, maxMultiplier, metersToMax } = currentSettings.resistance;
   baseMultiplierInput.value = baseMultiplier;
-  incrementPerScrollInput.value = incrementPerScroll;
   maxMultiplierInput.value = maxMultiplier;
-  recoveryPerSecondInput.value = recoveryPerSecond;
-  distanceWeightInput.value = distanceWeight;
+  metersToMaxInput.value = metersToMax;
 }
 
 function saveSettings(partial) {
@@ -142,23 +135,19 @@ function handleModeChange(event) {
 
 function handleSaveResistance() {
   const base = Number.parseFloat(baseMultiplierInput.value);
-  const increment = Number.parseFloat(incrementPerScrollInput.value);
   const max = Number.parseFloat(maxMultiplierInput.value);
-  const recovery = Number.parseFloat(recoveryPerSecondInput.value);
-  const distanceWeight = Number.parseFloat(distanceWeightInput.value);
+  const metersToMax = Number.parseFloat(metersToMaxInput.value);
 
   const resistance = {
-    baseMultiplier: Number.isFinite(base) && base > 0 ? base : DEFAULT_SETTINGS.resistance.baseMultiplier,
-    incrementPerScroll:
-      Number.isFinite(increment) && increment >= 0 ? increment : DEFAULT_SETTINGS.resistance.incrementPerScroll,
+    baseMultiplier: Number.isFinite(base) && base >= 1 ? base : DEFAULT_SETTINGS.resistance.baseMultiplier,
     maxMultiplier: Number.isFinite(max) && max >= 1 ? max : DEFAULT_SETTINGS.resistance.maxMultiplier,
-    recoveryPerSecond:
-      Number.isFinite(recovery) && recovery >= 0 ? recovery : DEFAULT_SETTINGS.resistance.recoveryPerSecond,
-    distanceWeight:
-      Number.isFinite(distanceWeight) && distanceWeight > 0
-        ? distanceWeight
-        : DEFAULT_SETTINGS.resistance.distanceWeight
+    metersToMax:
+      Number.isFinite(metersToMax) && metersToMax > 0 ? metersToMax : DEFAULT_SETTINGS.resistance.metersToMax
   };
+
+  if (resistance.maxMultiplier < resistance.baseMultiplier) {
+    resistance.maxMultiplier = resistance.baseMultiplier;
+  }
 
   currentSettings.resistance = resistance;
   saveSettings({ resistance });
@@ -191,10 +180,8 @@ function hydrate() {
       blacklist: Array.isArray(items.blacklist) ? items.blacklist.slice() : cloneDefaults(DEFAULT_SETTINGS.blacklist),
       resistance: {
         baseMultiplier: items.resistance?.baseMultiplier ?? DEFAULT_SETTINGS.resistance.baseMultiplier,
-        incrementPerScroll: items.resistance?.incrementPerScroll ?? DEFAULT_SETTINGS.resistance.incrementPerScroll,
         maxMultiplier: items.resistance?.maxMultiplier ?? DEFAULT_SETTINGS.resistance.maxMultiplier,
-        recoveryPerSecond: items.resistance?.recoveryPerSecond ?? DEFAULT_SETTINGS.resistance.recoveryPerSecond,
-        distanceWeight: items.resistance?.distanceWeight ?? DEFAULT_SETTINGS.resistance.distanceWeight
+        metersToMax: items.resistance?.metersToMax ?? DEFAULT_SETTINGS.resistance.metersToMax
       }
     };
 

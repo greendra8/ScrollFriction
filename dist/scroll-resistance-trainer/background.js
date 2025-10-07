@@ -3,11 +3,9 @@ const DEFAULT_SETTINGS = {
   whitelist: [],
   blacklist: [],
   resistance: {
-    baseMultiplier: 1.5,
-    incrementPerScroll: 0.2,
-    maxMultiplier: 20,
-    recoveryPerSecond: 1,
-    distanceWeight: 120
+    baseMultiplier: 1,
+    maxMultiplier: 12,
+    metersToMax: 8
   }
 };
 
@@ -33,28 +31,21 @@ function ensureDefaults() {
     }
 
     const storedResistance = items.resistance || {};
-    const mergedResistance = {
-      baseMultiplier:
-        Number.isFinite(storedResistance.baseMultiplier) && storedResistance.baseMultiplier > 0
-          ? storedResistance.baseMultiplier
-          : DEFAULT_SETTINGS.resistance.baseMultiplier,
-      incrementPerScroll:
-        Number.isFinite(storedResistance.incrementPerScroll) && storedResistance.incrementPerScroll >= 0
-          ? storedResistance.incrementPerScroll
-          : DEFAULT_SETTINGS.resistance.incrementPerScroll,
-      maxMultiplier:
-        Number.isFinite(storedResistance.maxMultiplier) && storedResistance.maxMultiplier >= 1
-          ? storedResistance.maxMultiplier
-          : DEFAULT_SETTINGS.resistance.maxMultiplier,
-      recoveryPerSecond:
-        Number.isFinite(storedResistance.recoveryPerSecond) && storedResistance.recoveryPerSecond >= 0
-          ? storedResistance.recoveryPerSecond
-          : DEFAULT_SETTINGS.resistance.recoveryPerSecond,
-      distanceWeight:
-        Number.isFinite(storedResistance.distanceWeight) && storedResistance.distanceWeight > 0
-          ? storedResistance.distanceWeight
-          : DEFAULT_SETTINGS.resistance.distanceWeight
-    };
+    let baseMultiplier = Number.isFinite(storedResistance.baseMultiplier) && storedResistance.baseMultiplier >= 1
+      ? storedResistance.baseMultiplier
+      : DEFAULT_SETTINGS.resistance.baseMultiplier;
+    let maxMultiplier = Number.isFinite(storedResistance.maxMultiplier) && storedResistance.maxMultiplier >= 1
+      ? storedResistance.maxMultiplier
+      : DEFAULT_SETTINGS.resistance.maxMultiplier;
+    const metersToMax = Number.isFinite(storedResistance.metersToMax) && storedResistance.metersToMax > 0
+      ? storedResistance.metersToMax
+      : DEFAULT_SETTINGS.resistance.metersToMax;
+
+    if (maxMultiplier < baseMultiplier) {
+      maxMultiplier = baseMultiplier;
+    }
+
+    const mergedResistance = { baseMultiplier, maxMultiplier, metersToMax };
 
     if (JSON.stringify(storedResistance) !== JSON.stringify(mergedResistance)) {
       updates.resistance = mergedResistance;
